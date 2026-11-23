@@ -1,0 +1,104 @@
+{
+  "version": "1.0",
+  "updated": "2026-11-22",
+  "owner": "Bridge",
+  "note": "用户自然语言意图 -> 镜头类型 -> 权重向量。keywords 用于意图匹配，weights 之和必须为 1.0。",
+  "scoring_dimensions": [
+    "subject_ratio",
+    "bg_complexity",
+    "light_angle",
+    "gaze_space"
+  ],
+  "intents": [
+    {
+      "id": "portrait_closeup",
+      "label": "人像特写",
+      "keywords": ["特写", "人像", "电影感", "背景虚化", "脸部", "情绪", "近景", "大头"],
+      "weights": {
+        "subject_ratio": 0.40,
+        "bg_complexity": 0.25,
+        "light_angle": 0.20,
+        "gaze_space": 0.15
+      },
+      "targets": {
+        "subject_ratio": [0.30, 0.60],
+        "bg_complexity": [0.00, 0.35],
+        "light_angle": ["side", "back"],
+        "gaze_space": [0.25, 0.50]
+      },
+      "preferred_actions": ["step_back", "longer_focal", "lower_camera", "side_light", "shift_subject_third"]
+    },
+    {
+      "id": "portrait_medium",
+      "label": "人物中景",
+      "keywords": ["中景", "半身", "采访", "口播", "人物", "对话", "站着", "坐着"],
+      "weights": {
+        "subject_ratio": 0.30,
+        "bg_complexity": 0.20,
+        "light_angle": 0.20,
+        "gaze_space": 0.30
+      },
+      "targets": {
+        "subject_ratio": [0.20, 0.40],
+        "bg_complexity": [0.00, 0.45],
+        "light_angle": ["side", "front"],
+        "gaze_space": [0.30, 0.60]
+      },
+      "preferred_actions": ["step_back", "eye_level", "shift_subject_third", "clear_background", "gaze_room"]
+    },
+    {
+      "id": "landscape",
+      "label": "风光环境",
+      "keywords": ["风光", "风景", "环境", "建筑", "街拍", "城市", "天空", "大场景", "远景"],
+      "weights": {
+        "subject_ratio": 0.15,
+        "bg_complexity": 0.40,
+        "light_angle": 0.35,
+        "gaze_space": 0.10
+      },
+      "targets": {
+        "subject_ratio": [0.05, 0.25],
+        "bg_complexity": [0.00, 0.50],
+        "light_angle": ["side", "back", "golden"],
+        "gaze_space": [0.10, 0.35]
+      },
+      "preferred_actions": ["lower_horizon", "wider_focal", "golden_hour", "step_back", "clean_edge"]
+    },
+    {
+      "id": "product",
+      "label": "产品静物",
+      "keywords": ["产品", "商品", "静物", "电商", "带货", "质感", "摆拍", "美食", "细节"],
+      "weights": {
+        "subject_ratio": 0.35,
+        "bg_complexity": 0.35,
+        "light_angle": 0.25,
+        "gaze_space": 0.05
+      },
+      "targets": {
+        "subject_ratio": [0.35, 0.65],
+        "bg_complexity": [0.00, 0.25],
+        "light_angle": ["side", "front"],
+        "gaze_space": [0.00, 0.15]
+      },
+      "preferred_actions": ["clean_background", "side_light", "lower_camera", "step_back", "remove_clutter"]
+    },
+    {
+      "id": "emotional",
+      "label": "情绪叙事",
+      "keywords": ["情绪", "故事", "叙事", "压抑", "孤独", "冲突", "氛围", "文艺", "安静", "紧张"],
+      "weights": {
+        "subject_ratio": 0.20,
+        "bg_complexity": 0.20,
+        "light_angle": 0.35,
+        "gaze_space": 0.25
+      },
+      "targets": {
+        "subject_ratio": [0.15, 0.45],
+        "bg_complexity": [0.00, 0.40],
+        "light_angle": ["back", "side", "low"],
+        "gaze_space": [0.35, 0.65]
+      },
+      "preferred_actions": ["dutch_angle", "back_light", "gaze_room", "lower_camera", "slow_push"]
+    }
+  ]
+}

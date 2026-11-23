@@ -1,0 +1,274 @@
+{
+  "version": "1.1",
+  "updated": "2026-11-26",
+  "owner": "domain",
+  "note": "33 条条件 -> 动作规则。field 只允许四维；light_angle 用 in/not_in + 字符串数组；action_id 只能引用 engine/action_effects.py 的 50 个 ID。覆盖主体过小/过大、背景过乱/过空、逆光/顺光/缺侧光/顶光、视线留白不足/过多。",
+  "operators": ["<", "<=", ">", ">=", "==", "in", "not_in"],
+  "fields": ["subject_ratio", "bg_complexity", "light_angle", "gaze_space"],
+  "rules": [
+    {
+      "id": "R001",
+      "condition": {"field": "subject_ratio", "op": "<", "value": 0.30},
+      "applies_to": ["portrait_closeup", "portrait_medium"],
+      "action_id": "step_forward",
+      "reason": "主体偏小，观众看不清表情",
+      "priority": 8
+    },
+    {
+      "id": "R002",
+      "condition": {"field": "subject_ratio", "op": ">", "value": 0.60},
+      "applies_to": ["portrait_closeup", "portrait_medium"],
+      "action_id": "step_back",
+      "reason": "主体太满，退一步让画面透气",
+      "priority": 8
+    },
+    {
+      "id": "R003",
+      "condition": {"field": "subject_ratio", "op": "<", "value": 0.20},
+      "applies_to": ["emotional"],
+      "action_id": "step_forward_close",
+      "reason": "情绪都在脸上，拍近一点才有感觉",
+      "priority": 7
+    },
+    {
+      "id": "R004",
+      "condition": {"field": "subject_ratio", "op": "<", "value": 0.35},
+      "applies_to": ["product"],
+      "action_id": "step_forward",
+      "reason": "产品太小，细节看不清",
+      "priority": 8
+    },
+    {
+      "id": "R005",
+      "condition": {"field": "subject_ratio", "op": ">", "value": 0.65},
+      "applies_to": ["product"],
+      "action_id": "step_back",
+      "reason": "产品被裁切，退后才能看全",
+      "priority": 8
+    },
+    {
+      "id": "R006",
+      "condition": {"field": "subject_ratio", "op": ">", "value": 0.25},
+      "applies_to": ["landscape"],
+      "action_id": "zoom_out_context",
+      "reason": "人物太抢戏，环境还没交代",
+      "priority": 7
+    },
+    {
+      "id": "R007",
+      "condition": {"field": "subject_ratio", "op": ">", "value": 0.55},
+      "applies_to": ["landscape"],
+      "action_id": "widest",
+      "reason": "主体太大，切广角把空间拉开",
+      "priority": 7
+    },
+    {
+      "id": "R008",
+      "condition": {"field": "bg_complexity", "op": ">", "value": 0.50},
+      "applies_to": ["portrait_closeup", "portrait_medium", "product", "emotional"],
+      "action_id": "clean_background",
+      "reason": "背景杂物太多，会抢走注意力",
+      "priority": 9
+    },
+    {
+      "id": "R009",
+      "condition": {"field": "bg_complexity", "op": ">", "value": 0.35},
+      "applies_to": ["portrait_closeup"],
+      "action_id": "longer_focal",
+      "reason": "长焦压缩背景，虚化后主体更突出",
+      "priority": 8
+    },
+    {
+      "id": "R010",
+      "condition": {"field": "bg_complexity", "op": ">", "value": 0.25},
+      "applies_to": ["product"],
+      "action_id": "remove_clutter",
+      "reason": "产品画面要极简，杂物先清掉",
+      "priority": 9
+    },
+    {
+      "id": "R011",
+      "condition": {"field": "bg_complexity", "op": ">", "value": 0.40},
+      "applies_to": ["portrait_medium"],
+      "action_id": "step_for_separation",
+      "reason": "让人离背景远一点，主体立刻跳出来",
+      "priority": 7
+    },
+    {
+      "id": "R012",
+      "condition": {"field": "bg_complexity", "op": ">", "value": 0.30},
+      "applies_to": ["landscape"],
+      "action_id": "clean_edge",
+      "reason": "画面边缘的路人树枝会破坏整体",
+      "priority": 6
+    },
+    {
+      "id": "R013",
+      "condition": {"field": "bg_complexity", "op": "<", "value": 0.10},
+      "applies_to": ["landscape"],
+      "action_id": "frame_within_frame",
+      "reason": "背景太干净反而平，找个框加层次",
+      "priority": 5
+    },
+    {
+      "id": "R014",
+      "condition": {"field": "bg_complexity", "op": ">", "value": 0.45},
+      "applies_to": ["emotional"],
+      "action_id": "change_angle_bg",
+      "reason": "情绪镜头也要干净，转个角度避开杂物",
+      "priority": 6
+    },
+    {
+      "id": "R015",
+      "condition": {"field": "light_angle", "op": "not_in", "value": ["side", "back"]},
+      "applies_to": ["portrait_closeup"],
+      "action_id": "side_light",
+      "reason": "侧光能拍出轮廓和质感，比正面平光好",
+      "priority": 8
+    },
+    {
+      "id": "R016",
+      "condition": {"field": "light_angle", "op": "in", "value": ["front"]},
+      "applies_to": ["portrait_closeup"],
+      "action_id": "orbit_subject",
+      "reason": "正面光太平，绕到侧面拍出轮廓",
+      "priority": 6
+    },
+    {
+      "id": "R017",
+      "condition": {"field": "light_angle", "op": "not_in", "value": ["side", "front"]},
+      "applies_to": ["product"],
+      "action_id": "side_light",
+      "reason": "产品需要侧面光才能显出质感",
+      "priority": 8
+    },
+    {
+      "id": "R018",
+      "condition": {"field": "light_angle", "op": "not_in", "value": ["side", "front"]},
+      "applies_to": ["product"],
+      "action_id": "front_light",
+      "reason": "光不够就转顺光，先把细节拍清楚",
+      "priority": 6
+    },
+    {
+      "id": "R019",
+      "condition": {"field": "light_angle", "op": "in", "value": ["back"]},
+      "applies_to": ["product"],
+      "action_id": "avoid_backlight",
+      "reason": "逆光拍产品会发黑，转到顺光来",
+      "priority": 7
+    },
+    {
+      "id": "R020",
+      "condition": {"field": "light_angle", "op": "not_in", "value": ["side", "back", "golden"]},
+      "applies_to": ["landscape"],
+      "action_id": "golden_hour",
+      "reason": "风光靠光线吃饭，黄金时刻差别很大",
+      "priority": 9
+    },
+    {
+      "id": "R021",
+      "condition": {"field": "light_angle", "op": "in", "value": ["low"]},
+      "applies_to": ["landscape"],
+      "action_id": "golden_hour",
+      "reason": "顶光太硬，等黄金时刻层次更好",
+      "priority": 8
+    },
+    {
+      "id": "R022",
+      "condition": {"field": "light_angle", "op": "not_in", "value": ["back", "side", "low"]},
+      "applies_to": ["emotional"],
+      "action_id": "back_light",
+      "reason": "逆光或侧光更能撑起情绪",
+      "priority": 8
+    },
+    {
+      "id": "R023",
+      "condition": {"field": "light_angle", "op": "in", "value": ["low"]},
+      "applies_to": ["portrait_closeup"],
+      "action_id": "avoid_backlight",
+      "reason": "顶光在眼窝压出黑影，转个角度让光扫过脸",
+      "priority": 6
+    },
+    {
+      "id": "R024",
+      "condition": {"field": "light_angle", "op": "not_in", "value": ["side", "front"]},
+      "applies_to": ["portrait_medium"],
+      "action_id": "move_to_window",
+      "reason": "室内窗边有现成的柔光",
+      "priority": 5
+    },
+    {
+      "id": "R025",
+      "condition": {"field": "gaze_space", "op": "<", "value": 0.25},
+      "applies_to": ["portrait_closeup"],
+      "action_id": "gaze_room",
+      "reason": "人往哪看，哪边就要留白",
+      "priority": 9
+    },
+    {
+      "id": "R026",
+      "condition": {"field": "gaze_space", "op": "<", "value": 0.30},
+      "applies_to": ["portrait_medium"],
+      "action_id": "shift_subject_third",
+      "reason": "主体放到三分之一，视线方向自然留出空间",
+      "priority": 8
+    },
+    {
+      "id": "R027",
+      "condition": {"field": "gaze_space", "op": ">", "value": 0.60},
+      "applies_to": ["portrait_medium"],
+      "action_id": "front_on",
+      "reason": "留白太多人挤到边上，回正中间",
+      "priority": 6
+    },
+    {
+      "id": "R028",
+      "condition": {"field": "gaze_space", "op": "<", "value": 0.35},
+      "applies_to": ["emotional"],
+      "action_id": "gaze_room",
+      "reason": "情绪镜头更需要视线方向的呼吸感",
+      "priority": 8
+    },
+    {
+      "id": "R029",
+      "condition": {"field": "gaze_space", "op": "<", "value": 0.15},
+      "applies_to": ["emotional"],
+      "action_id": "back_view",
+      "reason": "留白不够，拍背影反而有想象空间",
+      "priority": 6
+    },
+    {
+      "id": "R030",
+      "condition": {"field": "gaze_space", "op": ">", "value": 0.15},
+      "applies_to": ["product"],
+      "action_id": "center_subject",
+      "reason": "产品居中更稳，留白不是重点",
+      "priority": 6
+    },
+    {
+      "id": "R031",
+      "condition": {"field": "gaze_space", "op": ">", "value": 0.55},
+      "applies_to": ["portrait_closeup"],
+      "action_id": "center_subject",
+      "reason": "留白太多画面发空，主体回中间",
+      "priority": 5
+    },
+    {
+      "id": "R032",
+      "condition": {"field": "gaze_space", "op": ">", "value": 0.35},
+      "applies_to": ["landscape"],
+      "action_id": "center_subject",
+      "reason": "空旷感过了头，主体回中间压住画面",
+      "priority": 5
+    },
+    {
+      "id": "R033",
+      "condition": {"field": "bg_complexity", "op": ">", "value": 0.55},
+      "applies_to": ["landscape"],
+      "action_id": "change_angle_bg",
+      "reason": "背景太乱会吃掉风景的层次，转个角度就干净",
+      "priority": 9
+    }
+  ]
+}

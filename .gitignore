@@ -1,0 +1,38 @@
+# ===== 本地工具链 / 运行时产物（不入库）=====
+_tools/
+output/
+_scratch/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# ===== Node / Android 依赖与构建产物（可重建，不入库）=====
+mobile/node_modules/
+mobile/android/.gradle/
+mobile/android/build/
+mobile/android/app/build/
+mobile/android/local.properties
+mobile/android/.idea/
+mobile/android/captures/
+mobile/android/app/release/
+
+# ===== 开发证书私钥（只保留 certs/README.md，证书用 tools/make_dev_cert.py 生成）=====
+certs/*.pem
+certs/*.key
+certs/*.p12
+
+# ===== 日志 / 压缩包 / 临时包 =====
+*.log
+*.zip
+*.7z
+*.exe
+*.bundle
+*.keystore
+Thumbs.db
+.DS_Store
+
+# ===== 编辑器 =====
+.vscode/
+.idea/

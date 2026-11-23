@@ -1,0 +1,45 @@
+{
+  "version": "1.1",
+  "updated": "2026-11-26",
+  "owner": "domain",
+  "note": "素材整理 + 粗剪规则。quality_filters 按顺序匹配首个命中即排除；priority_bonus 直接加在 quality_score 上（followed_advice=1 加 0.15 是拍中->拍后闭环的验收点 #7）；transitions 采用 INTERFACES.md §2.4 的对象 schema（原始 kit 为数组，本轮按契约改造）。",
+  "quality_filters": [
+    {"id": "Q001", "field": "stability", "op": "<", "value": 0.45, "action": "exclude", "reason": "画面抖动严重，无法使用"},
+    {"id": "Q002", "field": "focus_ok", "op": "==", "value": 0, "action": "exclude", "reason": "主体失焦"},
+    {"id": "Q003", "field": "has_mistake", "op": "==", "value": 1, "action": "exclude", "reason": "有闭眼或穿帮"},
+    {"id": "Q004", "field": "duration_sec", "op": "<", "value": 1.0, "action": "exclude", "reason": "时长太短，剪不出可用片段"},
+    {"id": "Q005", "field": "quality_score", "op": "<", "value": 0.5, "action": "exclude", "reason": "画面质量不达标，先不用"},
+    {"id": "Q006", "field": "duration_sec", "op": ">", "value": 30.0, "action": "exclude", "reason": "单条过长，粗剪只取其中最精彩的段落"}
+  ],
+  "priority_bonus": [
+    {"id": "P001", "field": "followed_advice", "op": "==", "value": 1, "bonus": 0.15, "reason": "按拍摄建议调整过，通常质量更好"},
+    {"id": "P002", "field": "quality_score", "op": ">", "value": 0.75, "bonus": 0.10, "reason": "构图评分高"},
+    {"id": "P003", "field": "quality_score", "op": ">", "value": 0.85, "bonus": 0.05, "reason": "构图很稳，适合放在开头"}
+  ],
+  "selection": {
+    "max_clips": 12,
+    "min_duration_sec": 1.5,
+    "max_duration_sec": 8.0,
+    "default_duration_sec": 3.5,
+    "trim_head_sec": 0.3,
+    "trim_tail_sec": 0.3
+  },
+  "ordering": {
+    "strategy": "intent_arc",
+    "intent_order": ["landscape", "portrait_medium", "product", "portrait_closeup", "emotional"],
+    "keep_shooting_order_within_intent": true,
+    "note": "通用短视频叙事弧：环境建立 -> 人物交代 -> 产品展示 -> 情绪特写 -> 情绪收尾。同意图内保持拍摄顺序。"
+  },
+  "transitions": {
+    "after_intent": "emotional",
+    "after_intent_transition": "淡入淡出",
+    "same_scene_type_transition": "硬切",
+    "default_transition": "叠化",
+    "reason_templates": {
+      "淡入淡出": "情绪镜头后留呼吸",
+      "硬切": "同一场地硬切最自然",
+      "叠化": "场景或镜头类型变化用叠化过渡",
+      "无": "开篇镜头"
+    }
+  }
+}

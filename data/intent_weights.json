@@ -1,0 +1,294 @@
+{
+  "version": "1.1",
+  "updated": "2026-11-26",
+  "owner": "domain",
+  "note": "用户自然语言意图 -> 5 类镜头类型 -> 四维权向量。keywords 是真实用户会说的中文口语（含\"想要氛围感\"\"拍得高级点\"这类说法）；weights 四键之和 = 1.0；targets 四键齐全，light_angle 取值域 front/side/back/low/golden。",
+  "scoring_dimensions": [
+    "subject_ratio",
+    "bg_complexity",
+    "light_angle",
+    "gaze_space"
+  ],
+  "intents": [
+    {
+      "id": "portrait_closeup",
+      "label": "人像特写",
+      "keywords": [
+        "特写",
+        "人像",
+        "人物特写",
+        "电影感人像",
+        "电影感",
+        "背景虚化",
+        "虚化",
+        "浅景深",
+        "脸部",
+        "半身",
+        "大头",
+        "近景",
+        "拍脸",
+        "高级脸",
+        "氛围人像",
+        "奶油虚化"
+      ],
+      "weights": {
+        "subject_ratio": 0.4,
+        "bg_complexity": 0.25,
+        "light_angle": 0.2,
+        "gaze_space": 0.15
+      },
+      "targets": {
+        "subject_ratio": [
+          0.3,
+          0.6
+        ],
+        "bg_complexity": [
+          0.0,
+          0.35
+        ],
+        "light_angle": [
+          "side",
+          "back"
+        ],
+        "gaze_space": [
+          0.25,
+          0.5
+        ]
+      },
+      "preferred_actions": [
+        "step_back",
+        "longer_focal",
+        "lower_camera",
+        "side_light",
+        "shift_subject_third"
+      ]
+    },
+    {
+      "id": "portrait_medium",
+      "label": "人物中景",
+      "keywords": [
+        "中景",
+        "半身像",
+        "采访",
+        "口播",
+        "人物",
+        "对话",
+        "站着",
+        "坐着",
+        "讲解",
+        "介绍",
+        "聊天",
+        "访谈",
+        "出镜",
+        "讲两句",
+        "真人出镜",
+        "视频号",
+        "半身人像",
+        "对着镜头说"
+      ],
+      "weights": {
+        "subject_ratio": 0.3,
+        "bg_complexity": 0.2,
+        "light_angle": 0.2,
+        "gaze_space": 0.3
+      },
+      "targets": {
+        "subject_ratio": [
+          0.2,
+          0.4
+        ],
+        "bg_complexity": [
+          0.0,
+          0.45
+        ],
+        "light_angle": [
+          "side",
+          "front"
+        ],
+        "gaze_space": [
+          0.3,
+          0.6
+        ]
+      },
+      "preferred_actions": [
+        "step_back",
+        "eye_level",
+        "shift_subject_third",
+        "clean_background",
+        "gaze_room"
+      ]
+    },
+    {
+      "id": "landscape",
+      "label": "风光环境",
+      "keywords": [
+        "风景",
+        "风光",
+        "环境",
+        "大气",
+        "大场景",
+        "城市",
+        "街拍",
+        "建筑",
+        "天空",
+        "远景",
+        "开阔",
+        "全景",
+        "山河",
+        "夜景",
+        "日出",
+        "日落",
+        "旅游",
+        "大片",
+        "视野",
+        "空间感",
+        "户外"
+      ],
+      "weights": {
+        "subject_ratio": 0.15,
+        "bg_complexity": 0.4,
+        "light_angle": 0.35,
+        "gaze_space": 0.1
+      },
+      "targets": {
+        "subject_ratio": [
+          0.05,
+          0.25
+        ],
+        "bg_complexity": [
+          0.0,
+          0.5
+        ],
+        "light_angle": [
+          "side",
+          "back",
+          "golden"
+        ],
+        "gaze_space": [
+          0.1,
+          0.35
+        ]
+      },
+      "preferred_actions": [
+        "lower_horizon",
+        "widest",
+        "golden_hour",
+        "step_back",
+        "clean_edge"
+      ]
+    },
+    {
+      "id": "product",
+      "label": "产品静物",
+      "keywords": [
+        "产品",
+        "商品",
+        "静物",
+        "电商",
+        "带货",
+        "质感",
+        "细节",
+        "摆拍",
+        "美食",
+        "开箱",
+        "试用",
+        "桌面",
+        "材质",
+        "纹理",
+        "淘宝",
+        "直播卖",
+        "拍货",
+        "物件"
+      ],
+      "weights": {
+        "subject_ratio": 0.35,
+        "bg_complexity": 0.35,
+        "light_angle": 0.25,
+        "gaze_space": 0.05
+      },
+      "targets": {
+        "subject_ratio": [
+          0.35,
+          0.65
+        ],
+        "bg_complexity": [
+          0.0,
+          0.25
+        ],
+        "light_angle": [
+          "side",
+          "front"
+        ],
+        "gaze_space": [
+          0.0,
+          0.15
+        ]
+      },
+      "preferred_actions": [
+        "clean_background",
+        "side_light",
+        "lower_camera",
+        "step_forward",
+        "remove_clutter"
+      ]
+    },
+    {
+      "id": "emotional",
+      "label": "情绪叙事",
+      "keywords": [
+        "情绪",
+        "氛围感",
+        "氛围",
+        "故事",
+        "叙事",
+        "压抑",
+        "孤独",
+        "冲突",
+        "文艺",
+        "安静",
+        "紧张",
+        "走心",
+        "有感觉",
+        "悲伤",
+        "治愈",
+        "怀旧",
+        "想表达",
+        "情绪感",
+        "落寞",
+        "安静感"
+      ],
+      "weights": {
+        "subject_ratio": 0.2,
+        "bg_complexity": 0.2,
+        "light_angle": 0.35,
+        "gaze_space": 0.25
+      },
+      "targets": {
+        "subject_ratio": [
+          0.15,
+          0.45
+        ],
+        "bg_complexity": [
+          0.0,
+          0.4
+        ],
+        "light_angle": [
+          "back",
+          "side",
+          "low"
+        ],
+        "gaze_space": [
+          0.35,
+          0.65
+        ]
+      },
+      "preferred_actions": [
+        "dutch_angle",
+        "back_light",
+        "gaze_room",
+        "lower_camera",
+        "slow_push"
+      ]
+    }
+  ]
+}

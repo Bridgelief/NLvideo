@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  开发用网络安全配置：
+  - 系统 CA（正常公网 HTTPS 照常可用）
+  - 额外信任打包进 raw 的 LearnBuddy Dev CA（certs/ca.pem），
+    用于手机 WebView 访问电脑上的 https://<局域网IP>:8443（自签证书）。
+  - 不开启明文 HTTP：WebView 只走 https（server.androidScheme = https）。
+  发布给外部用户前请去掉第二行 <certificates src="@raw/lb_dev_ca" />。
+-->
+<network-security-config>
+    <base-config>
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="@raw/lb_dev_ca" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

@@ -1,0 +1,16 @@
+# 便携工具链（不进版本库）
+_tools/
+node_modules/
+
+# Android 构建产物与本地配置
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/app/src/main/assets/public/
+*.apk
+*.aab
+# 例外：把已经构建好、给队友直接安装测试的 debug 包入库（重建后可覆盖）
+!shooting-guide-debug.apk
+
+# 保留模板之外的手工改动说明：assets 由 cap sync 生成，用 scripts/apply-mobile-config.py 恢复

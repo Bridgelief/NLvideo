@@ -1,0 +1,9 @@
+﻿clip_id,filename,duration_sec,scene_type,intent_id,quality_score,stability,focus_ok,has_mistake,followed_advice,duplicate_of,in_point,out_point,notes
+C001,shot_001.mp4,6.2,outdoor,landscape,0.72,0.88,1,0,1,,0.4,5.8,按建议压低机位后拍摄
+C002,shot_002.mp4,5.1,studio,portrait_medium,0.81,0.92,1,0,1,,0.3,4.7,按建议把主体放到三分之一并留白
+C003,shot_003.mp4,7.4,studio,product,0.68,0.79,1,0,0,,0.5,6.9,侧面光产品镜头
+C004,shot_004.mp4,3.8,outdoor,landscape,0.45,0.31,1,0,0,,0.0,3.8,边走边拍抖动严重
+C005,shot_005.mp4,5.1,studio,portrait_medium,0.81,0.92,1,0,1,C002,0.3,4.7,与上一条重复
+C006,shot_006.mp4,4.2,studio,portrait_closeup,0.77,0.86,1,1,0,,0.2,4.0,主体闭眼
+C007,shot_007.mp4,8.0,outdoor,emotional,0.85,0.90,1,0,1,,0.6,7.4,逆光背影按建议调整过
+C008,shot_008.mp4,5.5,studio,product,0.52,0.83,0,0,0,,0.0,5.5,主体失焦

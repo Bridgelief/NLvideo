@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0a0b0e">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="拍摄指导">
+<meta name="description" content="手机端现场拍摄指导：对准画面、说一句想要的效果，AI 告诉你机位怎么调；拍完自动整理素材并生成粗剪。">
+<title>AI 现场拍摄指导助手</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- 手机外壳：桌面端渲染成一台手机，手机端铺满全屏 -->
+<div class="phone" id="app-phone">
+  <div class="screen">
+
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <div class="brand-text">
+            <h1>拍摄指导</h1>
+            <p class="brand-sub">按一下，说出你想要的效果</p>
+          </div>
+        </div>
+        <div class="topbar-tools">
+          <button type="button" id="btn-install" class="install-btn" hidden title="安装到手机主屏幕">安装</button>
+          <span id="status" class="status status--init" role="status" aria-live="polite" title="点击重新检测服务">初始化…</span>
+          <label class="debug-switch" for="debug-toggle" title="显示评分 / 特征 / 耗时（默认隐藏）">
+            <input type="checkbox" id="debug-toggle">
+            <span>调试</span>
+          </label>
+        </div>
+      </div>
+    </header>
+
+    <main class="stage">
+      <section class="viewer" aria-label="取景区">
+        <div class="viewfinder" id="viewfinder">
+          <video id="video" playsinline autoplay muted></video>
+          <canvas id="overlay-canvas" aria-hidden="true"></canvas>
+
+          <!-- 取景辅线：四角括号 + 中心对焦框（纯装饰，无交互） -->
+          <div class="frame-guides" aria-hidden="true">
+            <span class="fg fg--tl"></span>
+            <span class="fg fg--tr"></span>
+            <span class="fg fg--bl"></span>
+            <span class="fg fg--br"></span>
+            <span class="fg--focus"></span>
+          </div>
+
+          <p class="vf-hint" id="vf-hint">正在启动相机…</p>
+          <p class="vf-mode" id="vf-mode" hidden>演示模式</p>
+        </div>
+
+        <div class="demo-strip" id="demo-strip" hidden>
+          <div class="demo-strip-head">
+            <h2>演示场景</h2>
+            <p>没有相机？点一个场景当画面</p>
+          </div>
+          <div id="demo-scenarios" class="demo-scenarios" aria-label="演示场景列表"></div>
+          <p class="demo-error" id="demo-error" hidden></p>
+        </div>
+
+        <div id="shot-result" class="shot-result" hidden></div>
+      </section>
+
+      <section class="advice" aria-label="建议区">
+        <div class="advice-sheet">
+          <div class="sheet-grab" aria-hidden="true"></div>
+          <div class="advice-head">
+            <h2>现在怎么调</h2>
+            <p id="intent-badge" class="intent-badge" hidden></p>
+          </div>
+          <div id="suggestion-list" class="suggestion-list" aria-live="polite">
+            <div class="advice-empty">
+              <p class="advice-empty-title">还没有建议</p>
+              <p>在下面写下你想拍成的样子，按「给建议」。</p>
+            </div>
+          </div>
+          <pre id="debug-info" class="debug-info" hidden></pre>
+        </div>
+      </section>
+    </main>
+
+    <section id="panel-cut" class="panel-cut" hidden aria-label="拍后整理与粗剪面板">
+      <div class="panel-head">
+        <h2>拍后整理与粗剪</h2>
+        <div class="panel-head-tools">
+          <label class="cut-source-label" for="cut-source">素材源</label>
+          <select id="cut-source" aria-label="选择素材来源">
+            <option value="materials">示例素材</option>
+            <option value="shots">本次拍摄</option>
+          </select>
+          <button type="button" class="btn-ghost" id="btn-close-cut">收起</button>
+        </div>
+      </div>
+      <div class="panel-body">
+        <p class="panel-note" id="cut-note">正在生成…</p>
+
+        <div class="org-grid" id="cut-org">
+          <div class="org-item"><span class="org-label">总素材</span><span class="org-value" id="org-total">–</span></div>
+          <div class="org-item"><span class="org-label">可用</span><span class="org-value org-value--ok" id="org-usable">–</span></div>
+          <div class="org-item"><span class="org-label">剔除</span><span class="org-value" id="org-excluded">–</span></div>
+          <div class="org-item"><span class="org-label">重复</span><span class="org-value" id="org-duplicate">–</span></div>
+        </div>
+
+        <div class="panel-block" id="cut-excluded-block" hidden>
+          <h3>剔除与重复</h3>
+          <div class="cut-two-col">
+            <div>
+              <h4>剔除的素材（自动挑掉废片）</h4>
+              <ul id="cut-excluded" class="cut-list"></ul>
+            </div>
+            <div>
+              <h4>重复的素材（保留一条）</h4>
+              <ul id="cut-duplicates" class="cut-list"></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-block" id="cut-timeline-block" hidden>
+          <h3>粗剪时间线</h3>
+          <div class="table-wrap">
+            <table class="cut-table">
+              <thead>
+                <tr>
+                  <th class="num">#</th>
+                  <th>文件名</th>
+                  <th>时长</th>
+                  <th>转场</th>
+                  <th>保留理由</th>
+                </tr>
+              </thead>
+              <tbody id="cut-timeline-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel-block" id="cut-warnings-block" hidden>
+          <h3>提示</h3>
+          <ul id="cut-warnings" class="cut-list"></ul>
+        </div>
+
+        <div class="panel-foot">
+          <p class="cut-total" id="cut-total"></p>
+          <div class="cut-downloads">
+            <a id="dl-edl" class="btn-ghost" href="/api/edit/export/rough_cut.json" download="rough_cut.json">下载 EDL JSON</a>
+            <a id="dl-bat" class="btn-ghost" href="/api/edit/export/rough_cut.bat" download="rough_cut.bat">下载 FFmpeg 脚本</a>
+          </div>
+        </div>
+        <p class="panel-note panel-note--soft" id="cut-ffmpeg"></p>
+      </div>
+    </section>
+
+    <footer class="actionbar">
+      <div class="actionbar-inner">
+        <div class="composer">
+          <label class="sr-only" for="intent-input">你想拍成什么样</label>
+          <input id="intent-input" class="intent-input" type="text" value="电影感人物特写，背景虚化"
+                 placeholder="例：电影感人物特写，背景虚化" autocomplete="off" spellcheck="false"
+                 enterkeyhint="go">
+          <button type="button" id="btn-suggest" class="btn-primary" data-primary="true">
+            <span class="btn-primary-icon" aria-hidden="true"></span>给建议
+          </button>
+        </div>
+        <div class="minor-row" aria-label="次要操作">
+          <button type="button" id="btn-record" class="btn-ghost">记录镜头</button>
+          <button type="button" id="btn-compare" class="btn-ghost">对比前/后</button>
+          <button type="button" id="btn-finish" class="btn-ghost" aria-expanded="false" aria-controls="panel-cut" title="结束拍摄并生成粗剪">生成粗剪</button>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+</div>
+
+<noscript><p class="noscript">这个页面需要启用 JavaScript：相机取景、建议叠加和粗剪面板都在本地 JS 里完成。</p></noscript>
+
+<script src="app-config.js"></script>
+<script src="app.js" defer></script>
+</body>
+</html>

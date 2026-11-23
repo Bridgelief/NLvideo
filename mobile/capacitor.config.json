@@ -1,0 +1,11 @@
+{
+  "appId": "com.learnbuddy.shootingguide",
+  "appName": "拍摄指导",
+  "webDir": "../web",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "allowMixedContent": false
+  }
+}

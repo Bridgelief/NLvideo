@@ -1,0 +1,65 @@
+{
+  "version": "1.0",
+  "scenarios": [
+    {
+      "id": "backlit_portrait",
+      "label": "逆光人像 · 主体偏小",
+      "intent": "电影感人物特写，背景虚化",
+      "frame_url": "/static/demo/backlit_portrait.jpg",
+      "expected_features": {
+        "subject_ratio": 0.045,
+        "bg_complexity": 0.088,
+        "light_direction": "back",
+        "gaze_space": 0.48
+      }
+    },
+    {
+      "id": "cluttered_portrait",
+      "label": "背景杂乱人像",
+      "intent": "人像中景，背景干净一点",
+      "frame_url": "/static/demo/cluttered_portrait.jpg",
+      "expected_features": {
+        "subject_ratio": 0.112,
+        "bg_complexity": 0.843,
+        "light_direction": "front",
+        "gaze_space": 0.348
+      }
+    },
+    {
+      "id": "product_still",
+      "label": "产品静物 · 侧光",
+      "intent": "产品静物特写，突出质感",
+      "frame_url": "/static/demo/product_still.jpg",
+      "expected_features": {
+        "subject_ratio": 0.094,
+        "bg_complexity": 0.091,
+        "light_direction": "side",
+        "gaze_space": 0.371
+      }
+    },
+    {
+      "id": "landscape_mood",
+      "label": "风光情绪 · 黄昏",
+      "intent": "黄昏氛围感，情绪片",
+      "frame_url": "/static/demo/landscape_mood.jpg",
+      "expected_features": {
+        "subject_ratio": 0.07,
+        "bg_complexity": 0.079,
+        "light_direction": "golden",
+        "gaze_space": 0.388
+      }
+    },
+    {
+      "id": "closeup_portrait",
+      "label": "人像特写 · 背景虚化",
+      "intent": "人物特写，背景虚化",
+      "frame_url": "/static/demo/closeup_portrait.jpg",
+      "expected_features": {
+        "subject_ratio": 0.95,
+        "bg_complexity": 0.104,
+        "light_direction": "front",
+        "gaze_space": 0.02
+      }
+    }
+  ]
+}

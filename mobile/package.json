@@ -1,0 +1,18 @@
+{
+  "name": "shooting-guide-mobile",
+  "version": "1.0.0",
+  "private": true,
+  "description": "拍摄指导 Android 壳（Capacitor 套壳，复用 ../web 前端）",
+  "scripts": {
+    "sync": "cap sync android",
+    "open": "cap open android",
+    "build:debug": "cd android && gradlew.bat assembleDebug"
+  },
+  "dependencies": {
+    "@capacitor/core": "^6.2.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.2.0",
+    "@capacitor/android": "^6.2.0"
+  }
+}

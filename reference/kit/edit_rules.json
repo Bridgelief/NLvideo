@@ -1,0 +1,35 @@
+{
+  "version": "1.0",
+  "updated": "2026-11-22",
+  "owner": "队友B + Bridge",
+  "note": "素材自动剪辑与整理的规则库。队友B拉片后补充剪辑偏好，Bridge 负责决策逻辑。字段与 edit_engine.py 对应。",
+  "quality_filters": [
+    {"id":"Q001","field":"stability","op":"<","value":0.45,"action":"exclude","reason":"画面抖动严重，无法使用"},
+    {"id":"Q002","field":"focus_ok","op":"==","value":0,"action":"exclude","reason":"主体失焦"},
+    {"id":"Q003","field":"has_mistake","op":"==","value":1,"action":"exclude","reason":"存在闭眼或穿帮"},
+    {"id":"Q004","field":"quality_score","op":"<","value":0.35,"action":"exclude","reason":"构图质量分过低"}
+  ],
+  "priority_bonus": [
+    {"id":"P001","field":"followed_advice","op":"==","value":1,"bonus":0.15,"reason":"按拍摄建议调整过，通常质量更好"},
+    {"id":"P002","field":"quality_score","op":">","value":0.75,"bonus":0.10,"reason":"构图评分高"}
+  ],
+  "selection": {
+    "max_clips": 12,
+    "min_duration_sec": 1.5,
+    "max_duration_sec": 8.0,
+    "default_duration_sec": 3.5,
+    "trim_head_sec": 0.3,
+    "trim_tail_sec": 0.3
+  },
+  "ordering": {
+    "strategy": "intent_arc",
+    "intent_order": ["landscape", "portrait_medium", "product", "portrait_closeup", "emotional"],
+    "keep_shooting_order_within_intent": true,
+    "note": "通用短视频叙事弧：环境建立→人物→产品→特写→情绪收尾。队友B可按垂直场景改。"
+  },
+  "transitions": [
+    {"id":"T001","condition":"same_scene","transition":"硬切","reason":"同场景硬切最自然"},
+    {"id":"T002","condition":"intent_change","transition":"叠化","reason":"镜头类型变化用叠化过渡"},
+    {"id":"T003","condition":"from_emotional","transition":"淡入淡出","reason":"情绪镜头后用淡入淡出留呼吸"}
+  ]
+}

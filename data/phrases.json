@@ -1,0 +1,468 @@
+{
+  "version": "1.1",
+  "updated": "2026-11-26",
+  "owner": "domain",
+  "note": "50 条可执行动作话术，id 与 engine/action_effects.py 的 ACTION_EFFECTS 严格一一对应。action 是用户照着能做的一句话（含具体量），reason_template 是一句人话、不出现术语。affects 与 ACTION_EFFECTS 的 r/c/l/g 键一一对应换算而来。",
+  "categories": [
+    "distance",
+    "focal",
+    "height",
+    "angle",
+    "light",
+    "composition",
+    "background",
+    "movement"
+  ],
+  "phrases": [
+    {
+      "id": "step_back",
+      "action": "后退两步",
+      "category": "distance",
+      "affects": ["subject_ratio", "bg_complexity", "gaze_space"],
+      "delta_hint": "主体占比 -12%，背景干扰 -5%，环境更透气",
+      "reason_template": "现在主体太满，退后能带出环境层次",
+      "condition_hint": "subject_ratio > 目标上限"
+    },
+    {
+      "id": "step_back_more",
+      "action": "再退后三步，把全身带进来",
+      "category": "distance",
+      "affects": ["subject_ratio", "bg_complexity"],
+      "delta_hint": "主体占比 -20%，全身和场景都进画面",
+      "reason_template": "你要交代人和环境的关系，现在太近了",
+      "condition_hint": "主体被裁切"
+    },
+    {
+      "id": "step_forward",
+      "action": "往前走一步",
+      "category": "distance",
+      "affects": ["subject_ratio", "bg_complexity"],
+      "delta_hint": "主体占比 +12%，表情更清楚",
+      "reason_template": "主体太小，观众看不清表情",
+      "condition_hint": "subject_ratio < 目标下限"
+    },
+    {
+      "id": "step_forward_close",
+      "action": "再靠近半步，只留肩膀",
+      "category": "distance",
+      "affects": ["subject_ratio"],
+      "delta_hint": "主体占比 +18%，只留肩膀以上",
+      "reason_template": "情绪都集中在脸上，需要再近一点",
+      "condition_hint": "情绪类意图且主体偏小"
+    },
+    {
+      "id": "step_left",
+      "action": "往左挪半步，让出视线空间",
+      "category": "distance",
+      "affects": ["bg_complexity", "gaze_space"],
+      "delta_hint": "视线留白 +8%，背景干扰 -3%",
+      "reason_template": "往他看的方向挪，视线空间就出来了",
+      "condition_hint": "gaze_space 不足"
+    },
+    {
+      "id": "step_right",
+      "action": "往右挪半步，让出视线空间",
+      "category": "distance",
+      "affects": ["bg_complexity", "gaze_space"],
+      "delta_hint": "视线留白 +8%，背景干扰 -3%",
+      "reason_template": "换个方向站，视线和背景都能腾出来",
+      "condition_hint": "gaze_space 不足或背景偏乱"
+    },
+    {
+      "id": "orbit_subject",
+      "action": "绕到侧面 90 度拍",
+      "category": "distance",
+      "affects": ["gaze_space", "light_angle"],
+      "delta_hint": "视线留白 +6%，光线转成侧光",
+      "reason_template": "正面太平，侧一点能拍出轮廓",
+      "condition_hint": "需要立体感"
+    },
+    {
+      "id": "back_to_wall",
+      "action": "退到墙边，背景干净",
+      "category": "distance",
+      "affects": ["bg_complexity"],
+      "delta_hint": "背景干扰 -18%，背景立刻干净",
+      "reason_template": "背景杂物太多，换个位置一劳永逸",
+      "condition_hint": "bg_complexity > 0.5"
+    },
+    {
+      "id": "longer_focal",
+      "action": "换成 3.2x 焦段",
+      "category": "focal",
+      "affects": ["subject_ratio", "bg_complexity"],
+      "delta_hint": "主体占比 +5%，背景干扰 -15%",
+      "reason_template": "长焦能把背景压虚，正是你要的虚化",
+      "condition_hint": "背景虚化类意图"
+    },
+    {
+      "id": "widest",
+      "action": "切回 1x 广角",
+      "category": "focal",
+      "affects": ["subject_ratio", "bg_complexity"],
+      "delta_hint": "主体占比 -10%，环境进入画面",
+      "reason_template": "要交代空间关系，广角比长焦合适",
+      "condition_hint": "风光/环境类意图"
+    },
+    {
+      "id": "medium_focal",
+      "action": "用 2x 焦段拍",
+      "category": "focal",
+      "affects": ["subject_ratio"],
+      "delta_hint": "主体占比 +2%，脸部比例自然",
+      "reason_template": "广角怼脸会变形，2x 更自然",
+      "condition_hint": "人像中景"
+    },
+    {
+      "id": "zoom_in_slow",
+      "action": "慢慢推近，别一下到位",
+      "category": "focal",
+      "affects": ["subject_ratio"],
+      "delta_hint": "主体占比 +8%，节奏更稳",
+      "reason_template": "慢慢推近比直接切特写更有情绪",
+      "condition_hint": "视频叙事场景"
+    },
+    {
+      "id": "zoom_out_context",
+      "action": "拉远一点，交代环境",
+      "category": "focal",
+      "affects": ["subject_ratio", "bg_complexity"],
+      "delta_hint": "主体占比 -8%，环境交代清楚",
+      "reason_template": "观众还不知道这是哪，先给个环境",
+      "condition_hint": "场景切换后第一镜"
+    },
+    {
+      "id": "avoid_wide_face",
+      "action": "退半步，别用广角怼脸",
+      "category": "focal",
+      "affects": ["subject_ratio"],
+      "delta_hint": "主体占比 -5%，脸恢复正常比例",
+      "reason_template": "广角离太近，鼻子会被拍大",
+      "condition_hint": "广角 + 近距离人像"
+    },
+    {
+      "id": "telephoto_compress",
+      "action": "换 5x 长焦压背景",
+      "category": "focal",
+      "affects": ["bg_complexity"],
+      "delta_hint": "背景干扰 -12%，背景贴到身后",
+      "reason_template": "长焦能让远处背景贴到人物身后",
+      "condition_hint": "人像特写 + 背景杂乱"
+    },
+    {
+      "id": "lower_camera",
+      "action": "把手机降到腰部高度",
+      "category": "height",
+      "affects": ["subject_ratio"],
+      "delta_hint": "主体占比 +3%，人物更有气场",
+      "reason_template": "低机位能让人显得更有气场",
+      "condition_hint": "需要力量感/气场"
+    },
+    {
+      "id": "raise_camera",
+      "action": "把手机举高过头顶",
+      "category": "height",
+      "affects": ["subject_ratio", "bg_complexity"],
+      "delta_hint": "主体占比 -2%，桌面进画面",
+      "reason_template": "俯拍能交代桌面或地面的布局",
+      "condition_hint": "产品/美食场景"
+    },
+    {
+      "id": "eye_level",
+      "action": "镜头和眼睛齐平",
+      "category": "height",
+      "affects": ["gaze_space"],
+      "delta_hint": "视线留白 +4%，平视更自然",
+      "reason_template": "平视最自然，观众像在跟他说话",
+      "condition_hint": "采访/口播"
+    },
+    {
+      "id": "crouch_down",
+      "action": "蹲下来，机位到膝盖",
+      "category": "height",
+      "affects": ["bg_complexity", "subject_ratio"],
+      "delta_hint": "背景干扰 -10%，背景换成天空",
+      "reason_template": "蹲下能把背景从地面换成天空",
+      "condition_hint": "背景杂乱且户外"
+    },
+    {
+      "id": "knee_level",
+      "action": "机位压到膝盖高",
+      "category": "height",
+      "affects": ["subject_ratio"],
+      "delta_hint": "主体占比 +2%，视角更亲切",
+      "reason_template": "低机位更适合拍小孩或宠物",
+      "condition_hint": "拍摄对象身高较低"
+    },
+    {
+      "id": "slightly_above",
+      "action": "把手机抬高 10 厘米",
+      "category": "height",
+      "affects": ["subject_ratio"],
+      "delta_hint": "主体占比 -2%，脸显得更小",
+      "reason_template": "略高于视线会显脸小，又不会变形",
+      "condition_hint": "人像自拍场景"
+    },
+    {
+      "id": "ground_level",
+      "action": "把手机贴到地面拍",
+      "category": "height",
+      "affects": ["bg_complexity"],
+      "delta_hint": "背景干扰 -5%，画面纵深更强",
+      "reason_template": "贴地视角能拍出平常看不到的层次",
+      "condition_hint": "风光/街拍创意镜头"
+    },
+    {
+      "id": "dutch_angle",
+      "action": "机身倾斜 10 度",
+      "category": "angle",
+      "affects": ["gaze_space"],
+      "delta_hint": "视线留白 +5%，画面更不安定",
+      "reason_template": "倾斜画面能强化冲突和紧张",
+      "condition_hint": "情绪叙事-冲突"
+    },
+    {
+      "id": "front_on",
+      "action": "回正，正面平拍",
+      "category": "angle",
+      "affects": ["gaze_space", "subject_ratio"],
+      "delta_hint": "视线留白 -10%，直视观众",
+      "reason_template": "正面镜头让观众觉得被注视",
+      "condition_hint": "口播/采访"
+    },
+    {
+      "id": "back_view",
+      "action": "绕到身后拍背影",
+      "category": "angle",
+      "affects": ["gaze_space"],
+      "delta_hint": "视线留白 +12%，留出想象空间",
+      "reason_template": "背影能让观众把自己代入进去",
+      "condition_hint": "情绪叙事-孤独"
+    },
+    {
+      "id": "over_shoulder",
+      "action": "站到肩膀后 45 度拍",
+      "category": "angle",
+      "affects": ["gaze_space"],
+      "delta_hint": "视线留白 +8%，带入角色视角",
+      "reason_template": "越肩镜头让观众站在角色位置",
+      "condition_hint": "对话场景"
+    },
+    {
+      "id": "low_angle_up",
+      "action": "机身压低，从下往上拍",
+      "category": "angle",
+      "affects": ["subject_ratio"],
+      "delta_hint": "主体占比 +5%，显得高大",
+      "reason_template": "仰拍适合表现压迫感和力量",
+      "condition_hint": "情绪叙事-冲突"
+    },
+    {
+      "id": "high_angle_down",
+      "action": "举高一点，从上往下拍",
+      "category": "angle",
+      "affects": ["subject_ratio"],
+      "delta_hint": "主体占比 -3%，显得弱小",
+      "reason_template": "俯拍能表现孤立和无助",
+      "condition_hint": "情绪叙事-压抑"
+    },
+    {
+      "id": "side_light",
+      "action": "转 45 度让光扫过侧脸",
+      "category": "light",
+      "affects": ["light_angle"],
+      "delta_hint": "光线转成侧光，明暗更立体",
+      "reason_template": "侧光能拍出轮廓和质感",
+      "condition_hint": "人像/产品"
+    },
+    {
+      "id": "back_light",
+      "action": "后退一步转到逆光",
+      "category": "light",
+      "affects": ["light_angle"],
+      "delta_hint": "光线转成逆光，轮廓会发光",
+      "reason_template": "逆光能拍出金边，情绪更浓",
+      "condition_hint": "情绪叙事"
+    },
+    {
+      "id": "front_light",
+      "action": "转 30 度面向光源",
+      "category": "light",
+      "affects": ["light_angle"],
+      "delta_hint": "光线转成顺光，面部明亮",
+      "reason_template": "要看清细节，顺光最稳妥",
+      "condition_hint": "产品/口播"
+    },
+    {
+      "id": "golden_hour",
+      "action": "等日落前 30 分钟再拍",
+      "category": "light",
+      "affects": ["light_angle"],
+      "delta_hint": "光线转成黄金时刻，暖色长影",
+      "reason_template": "日出日落的光比正午好看得多",
+      "condition_hint": "风光/情绪"
+    },
+    {
+      "id": "avoid_backlight",
+      "action": "转个角度，别正对光源",
+      "category": "light",
+      "affects": ["light_angle"],
+      "delta_hint": "光线转成顺光，脸不再发黑",
+      "reason_template": "现在脸在阴影里，让光打到脸上",
+      "condition_hint": "front_light 目标但当前逆光"
+    },
+    {
+      "id": "move_to_window",
+      "action": "往窗边挪两步",
+      "category": "light",
+      "affects": ["light_angle"],
+      "delta_hint": "光线转成侧光，柔和自然",
+      "reason_template": "窗边有现成的柔光，不用补光灯",
+      "condition_hint": "室内拍摄"
+    },
+    {
+      "id": "shade_subject",
+      "action": "用阴影遮住半张脸",
+      "category": "light",
+      "affects": ["light_angle"],
+      "delta_hint": "光线转成低角度光，半明半暗",
+      "reason_template": "半明半暗比全亮更有故事感",
+      "condition_hint": "情绪叙事"
+    },
+    {
+      "id": "shift_subject_third",
+      "action": "主体放到左三分之一",
+      "category": "composition",
+      "affects": ["gaze_space", "subject_ratio"],
+      "delta_hint": "视线留白 +12%，主体占比 -3%",
+      "reason_template": "主体靠左、视线向右，画面才稳",
+      "condition_hint": "gaze_space 不足且主体居中"
+    },
+    {
+      "id": "shift_right_third",
+      "action": "主体放到右三分之一",
+      "category": "composition",
+      "affects": ["gaze_space", "subject_ratio"],
+      "delta_hint": "视线留白 +12%，主体占比 -3%",
+      "reason_template": "主体靠右，把左边留给视线",
+      "condition_hint": "视线朝左"
+    },
+    {
+      "id": "center_subject",
+      "action": "把主体挪回正中",
+      "category": "composition",
+      "affects": ["gaze_space"],
+      "delta_hint": "视线留白 -12%，构图更稳",
+      "reason_template": "对称构图适合产品、建筑这类题材",
+      "condition_hint": "产品/建筑"
+    },
+    {
+      "id": "gaze_room",
+      "action": "视线方向留两成空白",
+      "category": "composition",
+      "affects": ["gaze_space"],
+      "delta_hint": "视线留白 +15%，画面不憋闷",
+      "reason_template": "人往哪看，哪边就要留白",
+      "condition_hint": "gaze_space < 目标下限"
+    },
+    {
+      "id": "lower_horizon",
+      "action": "地平线压到下三分之一",
+      "category": "composition",
+      "affects": ["bg_complexity"],
+      "delta_hint": "背景干扰 -5%，天空占更多",
+      "reason_template": "天空好看就让天多占一点",
+      "condition_hint": "风光"
+    },
+    {
+      "id": "raise_horizon",
+      "action": "地平线提到上三分之一",
+      "category": "composition",
+      "affects": ["bg_complexity"],
+      "delta_hint": "背景干扰 -5%，地面占更多",
+      "reason_template": "地面或水面有内容时多留给它",
+      "condition_hint": "风光"
+    },
+    {
+      "id": "leave_negative_space",
+      "action": "画面留白再多两成",
+      "category": "composition",
+      "affects": ["bg_complexity", "subject_ratio"],
+      "delta_hint": "背景干扰 -10%，主体占比 -3%",
+      "reason_template": "留白比填满更显高级",
+      "condition_hint": "bg_complexity 偏高"
+    },
+    {
+      "id": "frame_within_frame",
+      "action": "找个门框把主体框住",
+      "category": "composition",
+      "affects": ["bg_complexity"],
+      "delta_hint": "背景干扰 +3%，画面层次更丰富",
+      "reason_template": "框中框能让画面有纵深感",
+      "condition_hint": "街拍/建筑"
+    },
+    {
+      "id": "clean_background",
+      "action": "换一面纯色墙当背景",
+      "category": "background",
+      "affects": ["bg_complexity"],
+      "delta_hint": "背景干扰 -20%，主体立刻突出",
+      "reason_template": "背景太乱会抢走注意力，先解决背景",
+      "condition_hint": "bg_complexity > 0.5"
+    },
+    {
+      "id": "remove_clutter",
+      "action": "把画面里的杂物挪走",
+      "category": "background",
+      "affects": ["bg_complexity"],
+      "delta_hint": "背景干扰 -15%，画面变干净",
+      "reason_template": "旁边这个瓶子挡着主体，挪一下就好",
+      "condition_hint": "存在明显杂物"
+    },
+    {
+      "id": "clean_edge",
+      "action": "把边缘的路人挪出画面",
+      "category": "background",
+      "affects": ["bg_complexity"],
+      "delta_hint": "背景干扰 -6%，边缘不穿帮",
+      "reason_template": "边缘的路人和树枝会破坏画面",
+      "condition_hint": "边缘检测到高显著物体"
+    },
+    {
+      "id": "change_angle_bg",
+      "action": "换个角度避开那棵树",
+      "category": "background",
+      "affects": ["bg_complexity"],
+      "delta_hint": "背景干扰 -12%，杂物离开主体",
+      "reason_template": "稍微转个角度，树就不在头上了",
+      "condition_hint": "背景物体与主体重叠"
+    },
+    {
+      "id": "step_for_separation",
+      "action": "让人离背景远一点",
+      "category": "background",
+      "affects": ["bg_complexity"],
+      "delta_hint": "背景干扰 -10%，主体和背景分开",
+      "reason_template": "人离背景远一点，主体会立刻跳出来",
+      "condition_hint": "主体与背景贴合"
+    },
+    {
+      "id": "blur_background",
+      "action": "光圈开大两档虚化",
+      "category": "background",
+      "affects": ["bg_complexity"],
+      "delta_hint": "背景干扰 -15%，背景变模糊",
+      "reason_template": "虚化是最快的背景清理方式",
+      "condition_hint": "有光圈控制能力"
+    },
+    {
+      "id": "slow_push",
+      "action": "慢慢往前推 20 厘米",
+      "category": "movement",
+      "affects": ["subject_ratio"],
+      "delta_hint": "主体占比 +6%，画面慢慢推进",
+      "reason_template": "缓慢推近比一下拉到位更有情绪",
+      "condition_hint": "视频叙事场景"
+    }
+  ]
+}

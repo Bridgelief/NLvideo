@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 现场拍摄指导助手 · 产品定义与三人分工方案</title>
+<style>
+:root{
+  --navy:#0B2A4A;
+  --navy2:#15436E;
+  --navy3:#1E5A8E;
+  --orange:#E8752C;
+  --orange-soft:#FFF1E6;
+  --bg:#F5F7FA;
+  --card:#FFFFFF;
+  --text:#1F2D3D;
+  --muted:#64748B;
+  --border:#DDE5ED;
+  --green:#1D9E75;
+  --green-soft:#E8F6F1;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;
+  font-size:14px;line-height:1.75;
+}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px 80px;}
+header{background:var(--navy);color:#fff;padding:44px 0 40px;margin-bottom:32px;}
+header .wrap{padding-bottom:0;}
+h1{font-size:30px;font-weight:600;margin:0 0 10px;letter-spacing:.5px;}
+.sub{font-size:15px;color:#B9D2EA;margin:0 0 22px;}
+.meta{display:flex;gap:10px;flex-wrap:wrap;}
+.meta span{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);padding:5px 12px;border-radius:20px;font-size:12px;}
+nav{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:28px;}
+nav a{color:var(--navy2);text-decoration:none;font-size:13px;margin-right:20px;line-height:2.2;white-space:nowrap;}
+nav a:hover{color:var(--orange);}
+section{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px 30px;margin-bottom:22px;}
+h2{font-size:19px;color:var(--navy);margin:0 0 18px;padding-bottom:12px;border-bottom:2px solid var(--orange);font-weight:600;}
+h3{font-size:15px;color:var(--navy2);margin:22px 0 10px;font-weight:600;}
+p{margin:8px 0;}
+.lead{background:var(--orange-soft);border-left:4px solid var(--orange);padding:16px 20px;border-radius:0 8px 8px 0;font-size:15px;margin:0 0 16px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.box{background:#F8FAFC;border:1px solid var(--border);border-radius:9px;padding:16px 18px;}
+.box h4{margin:0 0 8px;font-size:14px;color:var(--navy2);}
+.box p{font-size:13px;margin:4px 0;color:#334155;}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
+th{background:var(--navy);color:#fff;text-align:left;padding:10px 12px;font-weight:500;}
+td{border-bottom:1px solid var(--border);padding:10px 12px;vertical-align:top;}
+tr:nth-child(even) td{background:#FAFBFD;}
+ul,ol{margin:8px 0;padding-left:22px;}
+li{margin:5px 0;}
+code{background:#F1F5F9;padding:1px 5px;border-radius:4px;font-family:ui-monospace,Consolas,monospace;font-size:12px;color:#B3410E;}
+pre{background:#0F2740;color:#D8E8F5;border-radius:8px;padding:16px 18px;overflow-x:auto;font-size:12px;line-height:1.6;}
+pre .k{color:#F0A868;}
+.step{display:flex;gap:14px;align-items:flex-start;padding:11px 0;border-bottom:1px dashed var(--border);}
+.step:last-child{border-bottom:none;}
+.step .n{flex:0 0 30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;}
+.step .n.hot{background:var(--orange);}
+.step .c{flex:1;}
+.step .c b{color:var(--navy2);}
+.step .c small{display:block;color:var(--muted);font-size:12px;}
+.role{border-top:4px solid var(--navy3);}
+.role.you{border-top-color:var(--orange);}
+.role .tag{display:inline-block;background:var(--navy);color:#fff;font-size:11px;padding:3px 10px;border-radius:12px;margin-bottom:8px;}
+.role.you .tag{background:var(--orange);}
+.role h3{margin:0 0 12px;font-size:17px;}
+.role .dl{background:var(--green-soft);border:1px solid #BFE5D6;border-radius:7px;padding:10px 12px;margin-top:12px;font-size:12.5px;}
+.role .dl b{color:#0F6E56;}
+.chk{list-style:none;padding-left:0;}
+.chk li{padding-left:22px;position:relative;}
+.chk li:before{content:"";position:absolute;left:2px;top:10px;width:7px;height:7px;border-radius:2px;background:var(--orange);}
+.week{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border);}
+.week:last-child{border:none;}
+.week .w{flex:0 0 66px;font-weight:600;color:var(--orange);font-size:13px;}
+.week .d{flex:1;font-size:13px;}
+.risk{background:#FFF8F2;border:1px solid #F5D5B8;border-radius:8px;padding:14px 16px;margin:10px 0;}
+.risk b{color:#B45309;}
+.accept{background:var(--navy);color:#fff;border-radius:10px;padding:20px 24px;}
+.accept h2{border:none;color:#fff;margin:0 0 12px;padding:0;}
+.accept ol{margin:0;padding-left:20px;}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:20px 0;}
+@media(max-width:760px){.grid2,.grid3{grid-template-columns:1fr;}h1{font-size:24px;}section{padding:20px 18px;}}
+@media print{body{background:#fff;}header{background:var(--navy)!important;-webkit-print-color-adjust:exact;}section{break-inside:avoid;}nav{display:none;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>AI 现场拍摄指导助手</h1>
+    <p class="sub">产品定义 · 技术架构 · 三人分工方案</p>
+    <div class="meta">
+      <span>版本 v1.0</span><span>2026-11-19</span><span>团队规模 3 人</span><span>目标：3 周出可演示原型</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<nav>
+  <a href="#s1">01 一句话定位</a>
+  <a href="#s2">02 用户与痛点</a>
+  <a href="#s3">03 用户旅程</a>
+  <a href="#s4">04 功能模块</a>
+  <a href="#s4b">04B 素材剪辑</a>
+  <a href="#s5">05 技术架构</a>
+  <a href="#s6">06 详细分工</a>
+  <a href="#s7">07 接口约定</a>
+  <a href="#s8">08 三周排期</a>
+  <a href="#s9">09 风险与兜底</a>
+  <a href="#s10">10 验收标准</a>
+</nav>
+
+<section id="s1">
+  <h2>01 · 一句话定位</h2>
+  <p class="lead">拍摄现场，按一个按钮，说出你想要的效果，AI 看着当前取景画面，实时告诉你机位怎么调、怎么拍。</p>
+  <p>这不是一个"生成视频"的工具，也不是一个"自动构图"的滤镜。它是一个<strong>现场拍摄教练</strong>——把专业摄影师的判断力，翻译成普通人能执行的动作。</p>
+  <h3>产品边界（重要，防止做偏）</h3>
+  <table>
+    <tr><th style="width:22%">维度</th><th>我们做</th><th>我们不做</th></tr>
+    <tr><td>核心动作</td><td>看当前画面 → 给调整动作</td><td>自己生成视频画面</td></tr>
+    <tr><td>输出形式</td><td>"后退两步 / 换 3.2x / 机位降到腰部" + 理由</td><td>3D 最优机位坐标</td></tr>
+    <tr><td>交互时机</td><td>拍摄中实时建议 + 拍后素材整理与粗剪</td><td>逐帧精修、调色、特效、生成新画面</td></tr>
+    <tr><td>素材处理</td><td>按意图与质量筛选可用片段，输出粗剪时间线</td><td>替代专业剪辑师完成最终成片</td></tr>
+    <tr><td>技术路线</td><td>调用现成模型 API + 自研决策层</td><td>训练自己的视觉大模型</td></tr>
+  </table>
+  <p><strong>为什么"找机位"要落地成画面反馈：</strong>真实拍摄现场没有现成的 3D 场景结构，AI 不知道你身后是墙还是悬崖。所以只能"看当前画面 → 判断与目标的差距 → 给出可执行动作"。这不是降级，Doka、手机原生 AI 构图等已跑通的产品靠的都是这个逻辑。我们的差异点是<strong>意图驱动</strong>——不是给所有场景同一套构图线，而是按你说的"电影感特写""产品质感"给不同的建议。</p>
+</section>
+
+<section id="s2">
+  <h2>02 · 用户与痛点</h2>
+  <div class="grid3">
+    <div class="box">
+      <h4>短视频创作者</h4>
+      <p>知道要拍得"有感觉"，但说不出 professional 的机位要求。拍完发现画面平淡，不知道问题出在哪。</p>
+    </div>
+    <div class="box">
+      <h4>电商 / 营销商家</h4>
+      <p>一条产品视频能不能带来转化，账算得过来。愿意为"稳定产出能用的素材"付费。</p>
+    </div>
+    <div class="box">
+      <h4>学生剧组 / 摄影爱好者</h4>
+      <p>有审美想法，缺执行经验。需要有人在现场告诉他"再退两步会更好"。</p>
+    </div>
+  </div>
+  <h3>三个真实痛点</h3>
+  <ol>
+    <li><strong>会说想要什么，不会说怎么拍。</strong>用户能说出"想要氛围感"，说不出"主体占画面 35%、侧光、机位略低于视线"。</li>
+    <li><strong>拍完才知道废了。</strong>现有工具要么是拍后重构图（救不回镜头语言问题），要么是取景框上画通用辅助线（不懂你的意图）。</li>
+    <li><strong>AI 视频的镜头是随机抽的。</strong>跳轴、构图漂移、节奏单调——创作者用提示词控制不住，也不懂该用什么词。</li>
+  </ol>
+</section>
+
+<section id="s3">
+  <h2>03 · 用户旅程：按下按钮后的 8 秒</h2>
+  <div class="step"><div class="n">1</div><div class="c"><b>打开，对准场景</b><small>手机/电脑相机对着要拍的对象，画面实时显示在取景框</small></div></div>
+  <div class="step"><div class="n hot">2</div><div class="c"><b>按一个按钮</b><small>唯一的启动动作，不需要设置参数、不需要选模式</small></div></div>
+  <div class="step"><div class="n">3</div><div class="c"><b>说出你的要求</b><small>语音或文字："想要电影感的人物特写，背景虚化，情绪安静一点"</small></div></div>
+  <div class="step"><div class="n">4</div><div class="c"><b>本地瞬间框出主体</b><small>0.2 秒内用端侧小模型画出主体框，用户立刻看到 AI 在工作</small></div></div>
+  <div class="step"><div class="n">5</div><div class="c"><b>每 2–3 秒采一帧上云</b><small>云端大模型理解画面 + 意图，2–5 秒返回判断</small></div></div>
+  <div class="step"><div class="n hot">6</div><div class="c"><b>叠加显示 Top-3 建议</b><small>取景框上直接标注："① 后退两步，主体占比 18%→35% ② 换 3.2x ③ 机位降到腰部"，每条带一句为什么</small></div></div>
+  <div class="step"><div class="n">7</div><div class="c"><b>用户调整，建议刷新</b><small>画面变化后自动重新判断，形成"调整—反馈"闭环</small></div></div>
+  <div class="step"><div class="n">8</div><div class="c"><b>满意后按录制</b><small>可导出"调整前 vs 调整后"对比，用于分享或交付</small></div></div>
+  <p style="margin-top:16px;color:var(--muted);font-size:13px;">延迟说明：2–5 秒对拍摄指导完全够用——摄影师本来就要调整姿势和走位。不要为了亚秒级延迟牺牲可行性。</p>
+</section>
+
+<section id="s4">
+  <h2>04 · 六个功能模块</h2>
+  <table>
+    <tr><th style="width:14%">模块</th><th style="width:28%">做什么</th><th style="width:22%">输入</th><th style="width:22%">输出</th><th style="width:14%">负责人</th></tr>
+    <tr><td><b>A 意图解析</b></td><td>把用户自然语言拆成镜头类型 + 目标权重</td><td>"电影感人物特写，背景虚化"</td><td>intent=人像特写, weights={主体:.4,背景:.3,光:.2}</td><td>你（Bridge）</td></tr>
+    <tr><td><b>B 画面特征</b></td><td>从当前帧提取可计算的视觉量</td><td>视频帧</td><td>主体框、占比、边缘密度、光线方向</td><td>队友 A + 你</td></tr>
+    <tr><td><b>C 建议生成</b></td><td>目标函数算差距，映射成动作，排序</td><td>A + B 的结果 + 规则库</td><td>Top-3 动作 + 理由</td><td>你（Bridge）</td></tr>
+    <tr><td><b>D 实时交互</b></td><td>视频流、采样调度、按钮、建议叠加</td><td>相机画面 + 用户点击</td><td>带标注的取景画面</td><td>队友 A</td></tr>
+    <tr><td><b>E 规则与话术</b></td><td>什么情况给什么建议、怎么说人话</td><td>拉片标注案例</td><td>rules.json + 话术表</td><td>队友 B</td></tr>
+    <tr><td><b>F 素材整理与剪辑</b></td><td>按意图和质量筛选可用片段，输出粗剪时间线</td><td>素材清单 + 拍摄时的意图记录</td><td>整理分类 + EDL 时间线</td><td>你 + 队友 A</td></tr>
+  </table>
+
+  <h3 id="s4b">新增：拍摄素材的自动剪辑与整理</h3>
+  <p class="lead">拍完不是结束。系统把这次拍摄产生的素材自动分类、挑出能用的片段、排出一条粗剪时间线，直接导进剪映或 FFmpeg。</p>
+  <p><strong>这是闭环的关键：</strong>拍摄指导阶段已经记录了"每个镜头想要什么效果"和"用户是否按建议调整过"——这些数据成了剪辑阶段判断素材好坏的依据。别家工具只看画面质量，我们还知道你当时想拍什么。</p>
+  <div class="grid2">
+    <div class="box">
+      <h4>自动整理（拍后立即）</h4>
+      <p>按场景 / 镜头类型聚类；剔除重复与废片；给每条素材打上意图标签和质量分；标注"按建议调整过"的片段。</p>
+    </div>
+    <div class="box">
+      <h4>自动粗剪（一键执行）</h4>
+      <p>选每段的最佳入出点（避开抖动和闭眼）；按叙事顺序排列；控制总时长；给出转场建议；输出 EDL 时间线 JSON。</p>
+    </div>
+  </div>
+  <p style="color:var(--muted);font-size:13px;">详细规则、字段与分工见交付包中的 <code>edit_logic.md</code>、<code>edit_rules.json</code> 和 <code>edit_engine.py</code>。我们不碰最终成片——那是剪辑师的事，我们只让"从素材到能看的粗剪"这一步不再从零开始。</p>
+
+  <h3>目标函数（你的核心资产）</h3>
+  <pre><span class="k">评分 S</span> = w1·主体占比分 + w2·背景干扰分 + w3·光线角度分 + w4·视线空间分
+
+约束：焦段范围 / 机位高度 / 物理遮挡
+求解：网格搜索 → 遗传算法或粒子群
+输出：与当前画面的差距 → 映射为可执行动作
+
+关键：权重 w 由"用户意图 × 镜头类型"决定，
+      规则库（队友 B 产出）提供每一种意图的初始权重。</pre>
+</section>
+
+<section id="s5">
+  <h2>05 · 技术架构与工程取舍</h2>
+  <div class="grid3">
+    <div class="box">
+      <h4>端侧（本地）</h4>
+      <p>MediaPipe 做主体检测与姿态估计；视频流采集；2–3 秒采样调度；建议文字与辅助线叠加。</p>
+      <p><b>延迟：</b>毫秒级</p>
+    </div>
+    <div class="box">
+      <h4>云侧（API）</h4>
+      <p>多模态大模型理解"用户要求 vs 当前画面"的差距；Python 求解器生成建议。</p>
+      <p><b>延迟：</b>2–5 秒</p>
+    </div>
+    <div class="box">
+      <h4>数据层</h4>
+      <p><code>rules.json</code> 规则库；<code>shots.csv</code> 标注表；<code>phrases.json</code> 动作话术表。</p>
+      <p><b>形式：</b>纯文件，先不上数据库</p>
+    </div>
+  </div>
+  <h3>三个让"实时"可做的取舍</h3>
+  <ol>
+    <li><strong>不逐帧，采样帧。</strong>每 2–3 秒送一帧，成本和延迟都压得住，体验上足够。</li>
+    <li><strong>不输出坐标，输出动作。</strong>"后退两步"比"机位移动到 (x=2.3, y=1.6)"有用一百倍。</li>
+    <li><strong>端云分工。</strong>能本地算的（主体框、辅助线）绝不上云；云端只做语义判断。</li>
+  </ol>
+  <p><strong>技术栈建议：</strong>原型阶段用网页前端（ getUserMedia + Canvas 叠加）+ Python FastAPI 后端。三个人都是新手也不要紧——这套栈资料最多、调试最直观。</p>
+</section>
+
+<section id="s6">
+  <h2>06 · 详细分工</h2>
+  <p style="color:var(--muted);font-size:13px;">默认按"会写代码 = 队友 A，更懂拍摄 = 队友 B"分配。若两人都是编程背景，队友 B 承担拉片标注与用户调研；若两人都不懂拍摄，三人一起拉片，标注任务拆成三份。</p>
+
+  <div class="grid3">
+    <div class="box role you">
+      <span class="tag">你</span>
+      <h3>算法内核</h3>
+      <p><b>定位：</b>产品的大脑。把队友 B 的规则变成可计算的决策，交给队友 A 去展示。</p>
+      <h4>职责范围</h4>
+      <ul>
+        <li>意图分类体系设计</li>
+        <li>目标函数定义与调权</li>
+        <li>"差距 → 动作"映射逻辑</li>
+        <li>建议排序与理由生成</li>
+        <li>建议引擎 API 封装</li>
+      </ul>
+      <h4>三周任务</h4>
+      <ul class="chk">
+        <li>W1：定 5 类镜头意图 + 权重向量表；写一页纸数学定义</li>
+        <li>W1：列出需要的画面特征字段，交给队友 A</li>
+        <li>W2：实现 <code>suggest_engine.py</code>，输入特征 JSON 输出 Top-3 动作</li>
+        <li>W2：接入多模态 API 做意图解析和理由生成</li>
+        <li>W3：与 A 联调，用 20 张测试图校验一致率</li>
+      </ul>
+      <div class="dl"><b>交付物：</b><br>① <code>intent_weights.json</code><br>② <code>suggest_engine.py</code><br>③ 一页纸数学定义（Markdown/PDF）<br>④ 建议引擎 API</div>
+      <div class="dl"><b>验收标准：</b>给定 20 张测试图，输出建议与"懂摄影的人"的判断一致率 ≥ 70%；单次响应 &lt; 5 秒。</div>
+    </div>
+
+    <div class="box role">
+      <span class="tag">队友 A</span>
+      <h3>实时工程</h3>
+      <p><b>定位：</b>产品的身体。让用户真的能按一个按钮跑起来。</p>
+      <h4>职责范围</h4>
+      <ul>
+        <li>相机视频流采集</li>
+        <li>2–3 秒采样调度器</li>
+        <li>按钮与交互界面</li>
+        <li>建议叠加层（文字 + 辅助线）</li>
+        <li>端侧主体框（MediaPipe）</li>
+      </ul>
+      <h4>三周任务</h4>
+      <ul class="chk">
+        <li>W1：搭网页骨架，跑通 getUserMedia 出画面</li>
+        <li>W1：用假数据先把"按钮 → 出建议 → 叠加显示"流程跑通</li>
+        <li>W2：接入端侧主体框与采样调度</li>
+        <li>W2：对接你的建议引擎 API</li>
+        <li>W3：优化卡顿，打包成可演示版本，录演示视频</li>
+      </ul>
+      <div class="dl"><b>交付物：</b><br>① 可运行的原型网页<br>② 视频流与采样模块<br>③ 叠加层组件<br>④ 3 分钟演示录屏</div>
+      <div class="dl"><b>验收标准：</b>按按钮后 5 秒内出现第一条建议；连续运行 10 分钟不崩溃；界面上只有"一个按钮 + 输入要求 + 建议区"。</div>
+    </div>
+
+    <div class="box role">
+      <span class="tag">队友 B</span>
+      <h3>领域规则</h3>
+      <p><b>定位：</b>产品的经验。决定建议到底专不专业、说不说人话。</p>
+      <h4>职责范围</h4>
+      <ul>
+        <li>拉片与机位标注</li>
+        <li>规则库构建与维护</li>
+        <li>动作话术库（怎么说人话）</li>
+        <li>校验建议是否专业</li>
+        <li>找用户试用、收集反馈</li>
+      </ul>
+      <h4>三周任务</h4>
+      <ul class="chk">
+        <li>W1：拉 30 个镜头，建 90 条标注表（字段见接口约定）</li>
+        <li>W1：收集 50 条动作话术（后退两步 / 换 3.2x / 主体放左三分之一等）</li>
+        <li>W2：从标注表提炼 <code>rules.json</code>，覆盖 80% 常见场景</li>
+        <li>W2：对你的 20 条输出做"专不专业"评分</li>
+        <li>W3：找 5 个真实用户试用，记录反馈</li>
+      </ul>
+      <div class="dl"><b>交付物：</b><br>① <code>shots.csv</code>（90 条标注）<br>② <code>phrases.json</code>（50 条话术）<br>③ <code>rules.json</code>（规则库）<br>④ 用户试用反馈记录</div>
+      <div class="dl"><b>验收标准：</b>规则库覆盖 ≥ 80% 常见场景；话术表里的每条建议普通人听完就能执行，不需要二次解释。</div>
+    </div>
+  </div>
+
+  <h3>三人怎么串起来</h3>
+  <p><strong>依赖链：队友 B（内容）→ 你（大脑）→ 队友 A（身体）。</strong>但 A 第一周可以用假数据先搭架子，不必等任何人。每周固定一次 30 分钟碰头，只做三件事：看上周产出、确认接口有没有变、定下周优先级。</p>
+</section>
+
+<section id="s7">
+  <h2>07 · 接口约定（三人协作的生命线）</h2>
+  <h3>接口一：队友 B → 你，规则库</h3>
+  <pre>{
+  "scene_type": "portrait_closeup",
+  "intent": "cinematic",
+  "target_subject_ratio": [0.3, 0.6],
+  "preferred_light": "side",
+  "bg_complexity_max": 0.35,
+  "actions": [
+    {
+      "condition": "subject_ratio &lt; 0.3",
+      "action": "后退两步",
+      "reason": "主体占比偏低，退后能带出更多环境"
+    }
+  ]
+}</pre>
+  <h3>接口二：队友 A → 你，请求</h3>
+  <pre>{
+  "intent": "电影感人物特写，背景虚化",
+  "frame_features": {
+    "subject_ratio": 0.18,
+    "edge_density": 0.42,
+    "light_direction": "front",
+    "subject_position": [0.5, 0.48]
+  }
+}</pre>
+  <h3>接口三：你 → 队友 A，响应</h3>
+  <pre>{
+  "suggestions": [
+    {
+      "rank": 1,
+      "action": "后退两步",
+      "delta": "主体占比 +17%",
+      "reason": "当前 18%，目标 30–60%，退后能带出环境层次"
+    },
+    {
+      "rank": 2,
+      "action": "换成 3.2x 焦段",
+      "delta": "背景虚化增强",
+      "reason": "长焦压缩背景，符合你要的虚化感"
+    }
+  ]
+}</pre>
+  <p style="color:var(--muted);font-size:13px;">字段一旦定下，第一周内任何人要改都在群里说一声，不要私自改。接口文件放在同一个仓库/共享文档里，标明版本号。</p>
+</section>
+
+<section id="s8">
+  <h2>08 · 三周排期</h2>
+  <div class="week"><div class="w">第 1 周</div><div class="d"><b>并行打底。</b>你：意图分类表 + 一页纸数学定义 + 特征字段清单。队友 A：网页骨架 + 假数据跑通全流程。队友 B：90 条标注表 + 50 条话术。<br><span style="color:var(--muted)">周末产出：三份独立文件，互相交换看一遍。</span></div></div>
+  <div class="week"><div class="w">第 2 周</div><div class="d"><b>集成。</b>你：建议引擎实现 + API 封装。队友 A：接 API + 端侧主体框。队友 B：规则库 JSON + 校验你的 20 条输出。<br><span style="color:var(--muted)">周末产出：第一次跑通"按按钮 → 出建议"完整链路。</span></div></div>
+  <div class="week"><div class="w">第 3 周</div><div class="d"><b>验证与交付。</b>你：联调与一致率测试。队友 A：优化卡顿、录演示视频、打包。队友 B：找 5 个用户试用、收反馈。<br><span style="color:var(--muted)">周末产出：可演示原型 + 3 分钟录屏 + 大创申报素材。</span></div></div>
+  <p style="margin-top:14px;"><strong>每周固定动作：</strong>周一晚 30 分钟碰头定优先级；周日晚各自把产出放进共享目录；碰头只看产出，不开务虚会。</p>
+</section>
+
+<section id="s9">
+  <h2>09 · 风险与兜底</h2>
+  <div class="risk"><b>风险 1：队友都没有影视背景。</b><br>兜底：三人一起拉片，30 个镜头拆成每人 10 个。你只标"数学上可计算的量"，另外两人标"为什么这么拍"。规则库由三人共同投票确定。</div>
+  <div class="risk"><b>风险 2：2–5 秒延迟还是嫌慢。</b><br>兜底：把"连续建议"降级成"点一下给一次建议"（点击触发）。功能上仍然满足"按一个按钮给建议"，只是不持续刷新。这是完全可接受的第一版。</div>
+  <div class="risk"><b>风险 3：API 成本失控。</b><br>兜底：采样帧间隔从 2 秒拉到 4 秒；画面特征尽量本地算；云端只传压缩后的关键帧和意图文本。原型阶段用免费额度足够。</div>
+  <div class="risk"><b>风险 4：建议不准，用户不买账。</b><br>兜底：不追求"一次给对"，改成"给 3 个候选 + 让用户选哪个有用"。用户的选择反过来变成规则库的训练数据——这本身就是产品壁垒。</div>
+  <div class="risk"><b>风险 5：跟 Doka 之类的产品撞车。</b><br>兜底：我们不做通用构图线，只做<strong>意图驱动</strong>——"你想拍成什么样"决定建议。这是手机厂商不会做、第三方 App 没做的口子。验证时重点问用户："跟 Doka 比，哪个建议更符合你想要的感觉？"</div>
+</section>
+
+<section id="s10">
+  <div class="accept">
+    <h2>10 · Demo 验收标准</h2>
+    <p style="color:#B9D2EA;margin-top:0;">三周后，如果下面七条都能做到，就算原型成功，可以直接拿去申报大创或找用户验证。</p>
+    <ol>
+      <li>打开原型，画面里只有<strong>一个按钮</strong>、一个输入框、一个建议区。</li>
+      <li>按按钮、输入"电影感人物特写，背景虚化"，<strong>5 秒内</strong>出第一条建议。</li>
+      <li>建议是<strong>可执行动作 + 理由</strong>，不是分数、不是坐标、不是构图线。</li>
+      <li>用户按建议调整后，画面肉眼可见地更接近要求；导出"调整前 vs 调整后"对比图。</li>
+      <li>找 5 个人试用，至少 3 个人说"这个建议我平时想不到，但确实有用"。</li>
+      <li>拍摄结束后导入 5 条素材，系统能自动挑出可用片段并输出一条粗剪时间线。</li>
+      <li>"按建议调整过"的片段在剪辑结果中被优先保留，且用户能看到保留理由。</li>
+    </ol>
+  </div>
+</section>
+
+<footer>AI 现场拍摄指导助手 · 产品定义与三人分工方案 · v1.1 · 2026-11-22（新增素材自动剪辑与整理）</footer>
+
+</div>
+</body>
+</html>

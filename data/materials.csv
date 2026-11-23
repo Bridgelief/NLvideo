@@ -1,0 +1,17 @@
+clip_id,filename,duration_sec,scene_type,intent_id,quality_score,stability,focus_ok,has_mistake,duplicate_of,followed_advice,in_point,out_point,notes
+C001,shot_001.mp4,6.2,outdoor,landscape,0.72,0.88,1,0,,1,0.4,5.8,按建议压低机位后拍
+C002,shot_002.mp4,5.1,studio,portrait_medium,0.81,0.92,1,0,,1,0.3,4.7,按建议把主体放到三分之一并留白
+C003,shot_003.mp4,7.4,studio,product,0.68,0.79,1,0,,0,0.5,6.9,侧面光拍产品
+C004,shot_004.mp4,3.8,outdoor,landscape,0.45,0.31,1,0,,0,0.0,3.8,边走边拍抖动严重
+C005,shot_005.mp4,5.1,studio,portrait_medium,0.81,0.92,1,0,C002,1,0.3,4.7,与 C002 内容近似，判为重复
+C006,shot_006.mp4,4.2,studio,portrait_closeup,0.77,0.86,1,1,,0,0.2,4.0,拍到主体闭眼
+C007,shot_007.mp4,8.0,outdoor,emotional,0.85,0.90,1,0,,1,0.6,7.4,逆光背影，按建议调整过
+C008,shot_008.mp4,5.5,studio,product,0.52,0.83,0,0,,0,0.0,5.5,主体失焦
+C009,shot_009.mp4,12.4,outdoor,landscape,0.66,0.74,1,0,,0,1.2,9.8,低机位广角交代环境
+C010,shot_010.mp4,6.0,studio,portrait_closeup,0.79,0.81,1,0,,1,0.8,5.2,长焦虚化人像，按建议退半步
+C011,shot_011.mp4,0.8,outdoor,portrait_medium,0.72,0.88,1,0,,0,0.0,0.8,随手按了一下太短
+C012,shot_012.mp4,4.6,studio,product,0.44,0.86,1,0,,0,0.2,4.4,产品压在画面边缘
+C013,shot_013.mp4,7.2,outdoor,emotional,0.73,0.69,1,0,,1,0.5,6.4,侧逆光走路，按建议留白后补拍
+C014,shot_014.mp4,9.5,studio,portrait_medium,0.58,0.63,1,0,,0,1.0,8.2,采访口播，背景干净
+C015,shot_015.mp4,15.2,outdoor,landscape,0.61,0.58,1,0,,0,2.0,11.5,城市天际线横移
+C016,shot_016.mp4,6.8,studio,product,0.71,0.87,1,0,,1,0.4,6.0,顶光下补了侧光，产品细节清楚
