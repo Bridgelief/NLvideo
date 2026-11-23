@@ -212,7 +212,7 @@ python tests\acceptance_https_pwa.py           # 手机链路：HTTPS + 相机�
 ```powershell
 # A. 同一局域网（仓库主人先启动共享服务，窗口别关）
 powershell -ExecutionPolicy Bypass -File scripts\git-serve.ps1
-# 队友：git clone git://<电脑IP>:9418/NLvideo.git NLvideo
+# 队友：git clone http://<电脑IP>:8088/NLvideo.git NLvideo
 
 # B. 文件包（异地/无局域网）
 git bundle create D:\NLvideo.bundle --all

@@ -46,17 +46,20 @@ git config --global core.autocrlf false
 ```powershell
 # 电脑 A（仓库主人）：启动共享服务（保持窗口不关）
 powershell -ExecutionPolicy Bypass -File scripts\git-serve.ps1
-# 它会打印：git clone git://<IP>:9418/NLvideo.git
+# 它会打印：git clone http://<IP>:8088/NLvideo.git
 
 # 队友电脑 B/C（同一 Wi-Fi）：
-git clone git://<IP>:9418/NLvideo.git NLvideo
+git clone http://<IP>:8088/NLvideo.git NLvideo
 cd NLvideo
 ```
 
 - 第一次需要放行防火墙（管理员执行一次）：
-  `netsh advfirewall firewall add rule name="NLvideo git 9418" dir=in action=allow protocol=TCP localport=9418`
-- 共享服务由 `scripts/git-serve.ps1` 启动，`Ctrl+C` 关闭；**没有账号密码**，只适合家/宿舍/手机热点这类可信网络。
-- 推拉都走这个地址，不用管谁先提交，`git push` / `git pull` 即可。
+  `netsh advfirewall firewall add rule name="NLvideo git 8088" dir=in action=allow protocol=TCP localport=8088`
+- 共享服务由 `scripts/git-serve.ps1` 启动，`Ctrl+C` 关闭；**默认没有账号密码**，只适合家/宿舍/手机热点这类可信网络。
+- 想加一道最简口令：`scripts\git-serve.ps1 -Token 123456`，队友 clone 时用户名随意、密码填 `123456`。
+- 推拉都走这个地址：`git push` / `git pull` 即可（本机已实测 clone + push + pull 全通）。
+- 实现说明：`tools/git_http_server.py` 用 Git 自带的 `git http-backend` 提供智能 HTTP 协议。
+  （本机实测 `git daemon` 的 git:// 推送会在 Windows 上卡住，所以不用它；clone 仍可，但不推荐。）
 
 #### 方式 B：文件包（异地/没有局域网也能用）
 
@@ -171,12 +174,15 @@ git rebase --continue
 ```powershell
 # 启动（窗口别关，Ctrl+C 停止）
 powershell -ExecutionPolicy Bypass -File scripts\git-serve.ps1
-# 换端口：-Port 9419；指定共享库：-Repo D:\NLvideo.git；指定 git：-GitExe "C:\Program Files\Git\cmd\git.exe"
+# 常用参数：-Port 8089（换端口）、-Repo D:\NLvideo.git（指定共享库）、-Token 123456（加口令）
+# 换 Python：-PythonExe "C:\Python311\python.exe"
 ```
 
-- 共享库是**裸仓库** `D:\NLvideo.git`（没有工作目录，只存历史）；`D:\videoshoot` 是带工作区的仓库。
+- 共享库是**裸仓库** `D:\NLvideo.git`（没有工作目录，只存历史）；`D:\videoshoot` 是带工作区的仓库，`D:\NLvideo` 是指向它的目录链接（同一份文件）。
+- 服务实现：`tools/git_http_server.py` → 调用 Git 自带的 `git http-backend` 提供智能 HTTP 协议（clone/fetch/push 同一个地址）。
 - 队友 push 到裸库后，仓库主人 `git pull` 一下就能拿到（或直接 push 到同一个 `origin`）。
-- `scripts\git-serve.ps1` 自动找 Git：PATH 里的 `git` → 本仓库 `_tools\git-full\cmd\git.exe`（如果存在）。
+- 脚本会自动找 Python；`tools/git_http_server.py` 会自动找 `git-http-backend.exe`（优先本仓库 `_tools/git-full/`，也支持用 `--backend` 指定）。
+- 想停止：在脚本窗口 `Ctrl+C`；或用任务管理器结束对应 python 进程。
 
 ---
 
@@ -185,7 +191,7 @@ powershell -ExecutionPolicy Bypass -File scripts\git-serve.ps1
 | 症状 | 原因 / 解决 |
 |---|---|
 | `git: 无法将"git"项识别为...` | 没装 Git 或没进 PATH；装 https://git-scm.com/download/win 后重开终端 |
-| `git clone` 局域网地址超时 | 不在同一 Wi-Fi / 防火墙没放行 9418 / `git-serve.ps1` 没启动 |
+| `git clone` 局域网地址超时 | 不在同一 Wi-Fi / 防火墙没放行 8088 / `git-serve.ps1` 没启动 |
 | push 被拒（`non-fast-forward`） | 别人先推了：`git pull --rebase` 后再 push |
 | 行尾大量变化 / 文件显示"已修改"但没动 | 行尾差异：仓库已配 `.gitattributes`（LF）+ `core.autocrlf false`；按上面设置一次即可 |
 | `certificate verify failed` / 证书文件缺失 | 证书不入库，跑 `python tools/make_dev_cert.py` |
@@ -200,7 +206,7 @@ powershell -ExecutionPolicy Bypass -File scripts\git-serve.ps1
 ## 7. 安全与纪律
 
 1. **证书私钥、`_tools/`、`node_modules/`、`output/` 永不提交**（`.gitignore` 已处理，别 `git add -f`）。
-2. 局域网 `git daemon` **没有权限校验**，同网设备可读写；只在自己家/宿舍/热点用，演示完关掉。
+2. 局域网 Git HTTP 服务**默认没有账号密码**（可用 `-Token` 加一道口令），同网设备可读写；只在自己家/宿舍/热点用，演示完关掉。
 3. 不要把仓库整体（含 `.git`）发到公共网盘/公开仓库——历史里可能有本机路径；用 `git bundle` 或云端私有仓库共享更安全。
 4. APK 是 debug 签名，不能上架；正式发布按 `mobile/README.md` §7 配 release 签名。
 5. 每次提交写清楚：`模块：做了什么`（例：`server: /api/suggest 增加超时提示`），方便队友 review 和回滚。
