@@ -207,7 +207,7 @@ python tests\acceptance_https_pwa.py           # 手机链路：HTTPS + 相机�
 
 ## 10. 团队 Git 仓库（NLvideo）
 
-本目录是一个 Git 仓库（分支 `main`），共享裸库在 `D:\NLvideo.git`，队友的三种拿代码方式：
+本目录是一个 Git 仓库（分支 `main`）；**云端私有仓库已建好：<https://github.com/Bridgelief/NLvideo>**。三个 remote / 三种拿代码方式：
 
 ```powershell
 # A. 同一局域网（仓库主人先启动共享服务，窗口别关）
@@ -218,13 +218,13 @@ powershell -ExecutionPolicy Bypass -File scripts\git-serve.ps1
 git bundle create D:\NLvideo.bundle --all
 # 队友：git clone D:\NLvideo.bundle NLvideo
 
-# C. GitHub / Gitee（长期协作）：仓库主人 push 上去，队友加 Collaborator 后 clone
-git remote add github https://github.com/<账号>/NLvideo.git
-git push -u github main
+# C. GitHub（私有仓库，长期协作；队友需先被加成 Collaborator）
+git clone https://github.com/Bridgelief/NLvideo.git NLvideo
 ```
 
+本机 remote：`origin` = GitHub，`lan` = `D:\NLvideo.git`（内网共享用）。
 日常：`git pull --rebase` → 改 → `git add -A` → `git commit -m "模块：做了什么"` → `git push`。
-证书私钥、`_tools/`、`node_modules/`、`output/` 均已在 `.gitignore` 排除；完整分工、冲突处理、排错见 [docs/TEAM_GIT.md](docs/TEAM_GIT.md)。
+证书私钥、`_tools/`、`node_modules/`、`output/` 均已在 `.gitignore` 排除；仓库地址、邀请协作者、冲突处理见 [docs/TEAM_GIT.md](docs/TEAM_GIT.md)。
 
 ---
 

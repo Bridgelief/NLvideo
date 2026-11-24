@@ -75,22 +75,35 @@ cd NLvideo
 #   B 里：git pull D:\update.bundle main
 ```
 
-#### 方式 C：云端（GitHub / Gitee，长期协作推荐）
+#### 方式 C：云端 GitHub（已创建，长期协作推荐）
 
-由仓库主人在 GitHub/Gitee 新建空仓库 `NLvideo`，然后：
+**仓库已建好（私有）**：<https://github.com/Bridgelief/NLvideo>
 
-```powershell
-# 仓库主人（电脑 A）
-git remote add github https://github.com/<你的账号>/NLvideo.git
-git push -u github main
+- 仓库主人：`Bridgelief`（已推上 `main`，本地 remote：`origin` = GitHub，`lan` = `D:\NLvideo.git`）
+- 队友拉代码：
+  ```powershell
+  git clone https://github.com/Bridgelief/NLvideo.git NLvideo
+  cd NLvideo
+  ```
+  私有仓库需要主人把队友的 GitHub 账号加成 **Settings → Collaborators → Add people**（或把两个账号用户名发给主人代加）。
+- 队友推送前确认身份：
+  ```powershell
+  git config user.name "队友名字"
+  git config user.email "队友邮箱"
+  ```
+- 日常：`git pull --rebase` → 改 → commit → `git push`（走 GitHub 账号登录，第一次 push 会弹浏览器/凭据窗口）。
+- 换 remote / 机房网络特殊情况：
+  ```powershell
+  git remote -v                  # 应看到 origin=https://github.com/Bridgelief/NLvideo.git
+  git remote set-url origin https://github.com/Bridgelief/NLvideo.git
+  ```
 
-# 队友（电脑 B/C）
-git clone https://github.com/<你的账号>/NLvideo.git NLvideo
-# 或 Gitee 同理；云端仓库里把队友加成 Collaborator / 项目成员即可推送
-```
+> 云端仓库有账号体系、能异地协作、有历史记录；本项目是**私有仓库**，证书私钥本来就没入库。
+> 如果某台电脑连 github.com 的 git 端口不稳定（本机实测会偶发 Connection reset），
+> 可先用方式 A/B 同步，或在网络正常时再 push；只有本机搭建时用 GitHub API 导入过一次历史。
 
-> 云端仓库有账号体系、能异地协作、有历史记录；注意**公开仓库不要放私人素材/证书**（本项目已忽略证书）。
-> 如果先用了方式 A 的局域网地址，之后可随时 `git remote add github ...` 补充：一个仓库可以有多个 remote。
+> 本机实测备注：这台电脑的 `git` 走 443 到 github.com 会间歇性超时/重置，而 Python 访问 api.github.com 正常，
+> 所以仓库首推是用 GitHub REST API（Git Data）导入的；队友在正常网络下 `git push` 不受影响。
 
 ### 2.3 跑起来（每个人电脑上）
 
