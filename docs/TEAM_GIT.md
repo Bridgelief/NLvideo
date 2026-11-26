@@ -75,32 +75,38 @@ cd NLvideo
 #   B 里：git pull D:\update.bundle main
 ```
 
-#### 方式 C：云端 GitHub（已创建，长期协作推荐）
+#### 方式 C：云端 GitHub（已创建，公开仓库，长期协作推荐）
 
-**仓库已建好（私有）**：<https://github.com/Bridgelief/NLvideo>
+**仓库地址（公开：任何人不登录也能查看、clone、下载 ZIP）**：<https://github.com/Bridgelief/NLvideo>
 
-- 仓库主人：`Bridgelief`（已推上 `main`，本地 remote：`origin` = GitHub，`lan` = `D:\NLvideo.git`）
-- 队友拉代码：
+- 仓库主人：`Bridgelief`（本地 remote：`origin` = GitHub，`lan` = `D:\NLvideo.git`）
+- 队友拉代码（不需要登录、不需要邀请）：
   ```powershell
   git clone https://github.com/Bridgelief/NLvideo.git NLvideo
   cd NLvideo
   ```
-  私有仓库需要主人把队友的 GitHub 账号加成 **Settings → Collaborators → Add people**（或把两个账号用户名发给主人代加）。
-- 队友推送前确认身份：
-  ```powershell
-  git config user.name "队友名字"
-  git config user.email "队友邮箱"
-  ```
-- 日常：`git pull --rebase` → 改 → commit → `git push`（走 GitHub 账号登录，第一次 push 会弹浏览器/凭据窗口）。
-- 换 remote / 机房网络特殊情况：
+- **想 push（改完推回）需要 Collaborator 权限**：
+  1. 用**你自己的 GitHub 账号**接受邀请（邮件或 github.com 站内通知；找不到就让主人到
+     <https://github.com/Bridgelief/NLvideo/settings/access> 重新发一次）
+  2. 配置自己的提交身份：
+     ```powershell
+     git config user.name "队友名字"
+     git config user.email "队友邮箱"
+     ```
+  3. 第一次 push 会弹 GitHub 登录，用自己账号登录即可。
+- **没被邀请也能参与**：公开仓库支持 Fork → 改 → 提 Pull Request，主人合并后你的改动就进主线。
+- 日常：`git pull --rebase` → 改 → `git add -A` → `git commit -m "模块：做了什么"` → `git push`。
+- 换 remote / 网络特殊情况：
   ```powershell
   git remote -v                  # 应看到 origin=https://github.com/Bridgelief/NLvideo.git
   git remote set-url origin https://github.com/Bridgelief/NLvideo.git
   ```
 
-> 云端仓库有账号体系、能异地协作、有历史记录；本项目是**私有仓库**，证书私钥本来就没入库。
+> 仓库是**公开**的：证书私钥、`_tools/`、`node_modules/`、`output/` 本来就没入库；提交作者邮箱已改成
+> GitHub 隐私邮箱（`ID+Bridgelief@users.noreply.github.com`），不会公开个人 QQ 邮箱。
+> 如果以后想改回私有：仓库 Settings → General → Danger Zone → Change visibility → Private。
 > 如果某台电脑连 github.com 的 git 端口不稳定（本机实测会偶发 Connection reset），
-> 可先用方式 A/B 同步，或在网络正常时再 push；只有本机搭建时用 GitHub API 导入过一次历史。
+> 可先用方式 A/B 同步，或在网络正常时再 push；本机首推是用 GitHub REST API 导入的（见下）。
 
 > 本机实测备注：这台电脑的 `git` 走 443 到 github.com 会间歇性超时/重置，而 Python 访问 api.github.com 正常，
 > 所以仓库首推是用 GitHub REST API（Git Data）导入的；队友在正常网络下 `git push` 不受影响。

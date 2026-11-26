@@ -207,7 +207,7 @@ python tests\acceptance_https_pwa.py           # 手机链路：HTTPS + 相机�
 
 ## 10. 团队 Git 仓库（NLvideo）
 
-本目录是一个 Git 仓库（分支 `main`）；**云端私有仓库已建好：<https://github.com/Bridgelief/NLvideo>**。三个 remote / 三种拿代码方式：
+本目录是一个 Git 仓库（分支 `main`）；**云端公开仓库：<https://github.com/Bridgelief/NLvideo>**（clone 不用登录；push 需接受 Collaborator 邀请）。三种拿代码方式：
 
 ```powershell
 # A. 同一局域网（仓库主人先启动共享服务，窗口别关）
@@ -218,7 +218,7 @@ powershell -ExecutionPolicy Bypass -File scripts\git-serve.ps1
 git bundle create D:\NLvideo.bundle --all
 # 队友：git clone D:\NLvideo.bundle NLvideo
 
-# C. GitHub（私有仓库，长期协作；队友需先被加成 Collaborator）
+# C. GitHub（公开仓库，长期协作；所有人都能 clone；写权限需邀请或走 Fork+PR）
 git clone https://github.com/Bridgelief/NLvideo.git NLvideo
 ```
 
